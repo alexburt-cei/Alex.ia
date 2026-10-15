@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Colores =====
+   Inspirados en Notion. Los textos secundarios están algo más oscuros que los
+   de Notion para que se lean bien (contraste AA, 4,5:1) sobre el fondo blanco
+   y sobre el gris de las cabeceras. --tinta-3 es solo para textos de ejemplo
+   e iconos de adorno. */
+:root {
+  color-scheme: light;
+  --fondo: #ffffff;
+  --fondo-2: #f7f7f5;
+  --tinta: #37352f;
+  --tinta-2: #6f6e69;
+  --tinta-3: #a5a4a0;
+  --linea: #e9e9e7;
+  --hover: rgba(55, 53, 47, 0.06);
+  --activo: rgba(35, 131, 226, 0.08);
+  --acento: #1f6fc5;
+  --acento-texto: #1f6fc5;
+  --rojo: #c4403b;
+  --naranja: #b25a06;
+  --progreso: #4dab9a;
+  --sombra-flotante: 0 0 0 1px rgba(15, 15, 15, 0.05), 0 3px 6px rgba(15, 15, 15, 0.1),
+    0 9px 24px rgba(15, 15, 15, 0.2);
+  --sombra-peek: -4px 0 24px rgba(15, 15, 15, 0.08), -1px 0 0 rgba(15, 15, 15, 0.05);
+
+  /* Etiquetas: fondo y texto de cada color, como las opciones de Notion. */
+  --e-default-bg: #ebeae8;
+  --e-default-tx: #37352f;
+  --e-gray-bg: #e3e2e0;
+  --e-gray-tx: #32302c;
+  --e-brown-bg: #eee0da;
+  --e-brown-tx: #442a1e;
+  --e-orange-bg: #fadec9;
+  --e-orange-tx: #49290e;
+  --e-yellow-bg: #fdecc8;
+  --e-yellow-tx: #402c1b;
+  --e-green-bg: #dbeddb;
+  --e-green-tx: #1c3829;
+  --e-blue-bg: #d3e5ef;
+  --e-blue-tx: #183347;
+  --e-purple-bg: #e8deee;
+  --e-purple-tx: #412454;
+  --e-pink-bg: #f5e0e9;
+  --e-pink-tx: #4c2337;
+  --e-red-bg: #ffe2dd;
+  --e-red-tx: #5d1715;
+}
+
+.dark {
+  color-scheme: dark;
+  --fondo: #191919;
+  --fondo-2: #202020;
+  --tinta: #d4d4d4;
+  --tinta-2: #9b9b9b;
+  --tinta-3: #6b6b6b;
+  --linea: #2f2f2f;
+  --hover: rgba(255, 255, 255, 0.055);
+  --activo: rgba(35, 131, 226, 0.14);
+  --acento: #1f6fc5;
+  --acento-texto: #529cca;
+  --rojo: #e5675f;
+  --naranja: #e49b4f;
+  --progreso: #4dab9a;
+  --sombra-flotante: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 3px 6px rgba(0, 0, 0, 0.4),
+    0 9px 24px rgba(0, 0, 0, 0.5);
+  --sombra-peek: -4px 0 24px rgba(0, 0, 0, 0.45), -1px 0 0 rgba(255, 255, 255, 0.06);
+
+  --e-default-bg: #373737;
+  --e-default-tx: #ededed;
+  --e-gray-bg: #5a5a5a;
+  --e-gray-tx: #ededed;
+  --e-brown-bg: #603b2c;
+  --e-brown-tx: #ededed;
+  --e-orange-bg: #854c1d;
+  --e-orange-tx: #ededed;
+  --e-yellow-bg: #89632a;
+  --e-yellow-tx: #ededed;
+  --e-green-bg: #2b593f;
+  --e-green-tx: #ededed;
+  --e-blue-bg: #28456c;
+  --e-blue-tx: #ededed;
+  --e-purple-bg: #492f64;
+  --e-purple-tx: #ededed;
+  --e-pink-bg: #69314c;
+  --e-pink-tx: #ededed;
+  --e-red-bg: #6e3630;
+  --e-red-tx: #ededed;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(35, 131, 226, 0.28);
+}
+
+:focus-visible {
+  outline: 2px solid var(--acento-texto);
+  outline-offset: 1px;
+  border-radius: 3px;
+}
+
+/* ===== Piezas tipo Notion ===== */
+
+/* Etiqueta de una opción (estado, prioridad, sistema…). */
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.etiqueta-default { background: var(--e-default-bg); color: var(--e-default-tx); }
+.etiqueta-gray { background: var(--e-gray-bg); color: var(--e-gray-tx); }
+.etiqueta-brown { background: var(--e-brown-bg); color: var(--e-brown-tx); }
+.etiqueta-orange { background: var(--e-orange-bg); color: var(--e-orange-tx); }
+.etiqueta-yellow { background: var(--e-yellow-bg); color: var(--e-yellow-tx); }
+.etiqueta-green { background: var(--e-green-bg); color: var(--e-green-tx); }
+.etiqueta-blue { background: var(--e-blue-bg); color: var(--e-blue-tx); }
+.etiqueta-purple { background: var(--e-purple-bg); color: var(--e-purple-tx); }
+.etiqueta-pink { background: var(--e-pink-bg); color: var(--e-pink-tx); }
+.etiqueta-red { background: var(--e-red-bg); color: var(--e-red-tx); }
+
+/* En la capa de componentes, para que las utilidades de Tailwind (w-auto,
+   text-sm, bg-…) puedan cambiarlas en cada sitio. */
+@layer components {
+  /* Casilla de una lista de tareas. */
+  .casilla {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--tinta-2);
+    border-radius: 3px;
+    color: #ffffff;
+    transition: background 100ms;
+  }
+  .casilla:hover { background: var(--hover); }
+  .casilla-marcada,
+  .casilla-marcada:hover {
+    background: var(--acento);
+    border-color: var(--acento);
+  }
+
+  /* Campo editable sin borde: se nota al pasar el ratón, como en Notion. */
+  .campo {
+    width: 100%;
+    min-height: 28px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    outline: none;
+    resize: none;
+  }
+  .campo:hover { background: var(--hover); }
+  .campo:focus {
+    background: var(--fondo);
+    box-shadow: 0 0 0 1px var(--linea), 0 0 0 3px rgba(35, 131, 226, 0.25);
+  }
+  .campo::placeholder { color: var(--tinta-3); }
+
+  .campo-boton {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    max-width: 100%;
+    padding: 3px 6px;
+    border-radius: 4px;
+    text-align: left;
+  }
+  .campo-boton:hover { background: var(--hover); }
+}
+
+/* Barras de desplazamiento discretas en las tablas y el tablero. */
+.desplazable::-webkit-scrollbar { height: 8px; width: 8px; }
+.desplazable::-webkit-scrollbar-thumb { background: var(--linea); border-radius: 4px; }
+.sin-barra { scrollbar-width: none; }
+.sin-barra::-webkit-scrollbar { display: none; }

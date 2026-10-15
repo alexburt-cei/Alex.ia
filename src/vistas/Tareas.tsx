@@ -1,0 +1,370 @@
+import { useState } from "react";
+import {
+  editarRonda,
+  estadoTrabajoVacio,
+  marcaDe,
+  marcar,
+  recuento,
+  rondaTocada,
+  seccionesVisibles,
+  terminar,
+  totalPasos,
+} from "../lib/checklist.ts";
+import { momentoLegible } from "../lib/fechas.ts";
+import { peticionesPendientes } from "../lib/inicio.ts";
+import { ESTADOS_PASO, opcion, type Opcion } from "../lib/opciones.ts";
+import { plural } from "../lib/texto.ts";
+import type { MarcaPaso, Paso, RondaTerminada, Ronda, Trabajo } from "../lib/tipos.ts";
+import { cambiarTrabajo, useDatos } from "../estado/almacen.ts";
+import { ir } from "../estado/navegacion.ts";
+import { TRABAJOS, trabajoPorId } from "../trabajos/index.ts";
+import { Avance, Aviso, Boton, Casilla, Etiqueta, Pestanas, Plegable } from "../ui/basicos.tsx";
+import { AreaTexto, CampoTexto, Selector } from "../ui/campos.tsx";
+import { Pagina } from "../ui/Pagina.tsx";
+import { Propiedad, Propiedades } from "../ui/Peek.tsx";
+
+export function Tareas({ trabajo }: { trabajo: string | null }) {
+  const t = trabajoPorId(trabajo) ?? TRABAJOS[0];
+  return (
+    <Pagina
+      icono="✅"
+      titulo="Tareas"
+      descripcion="Tus trabajos de siempre, paso a paso. Al acabar, «Terminar» guarda la lista en «Última vez» y la deja vacía para la próxima."
+    >
+      <div className="border-b border-linea">
+        <Pestanas
+          etiqueta="Trabajos"
+          valor={t.id}
+          onCambiar={(id) => ir("tareas", id)}
+          opciones={TRABAJOS.map((x) => ({
+            valor: x.id,
+            texto: x.nombre,
+            icono: <span aria-hidden="true">{x.icono}</span>,
+          }))}
+        />
+      </div>
+      <VistaTrabajo key={t.id} t={t} />
+    </Pagina>
+  );
+}
+
+const ahoraISO = () => new Date().toISOString();
+
+function VistaTrabajo({ t }: { t: Trabajo }) {
+  const datos = useDatos();
+  const estado = datos.trabajos[t.id] ?? estadoTrabajoVacio();
+  const r = estado.actual;
+  const secciones = seccionesVisibles(t, r.variante);
+  const c = recuento(t, r);
+  const peticiones = peticionesPendientes(datos.peticiones).filter((p) => p.trabajo === t.id);
+  const [ayudaAbierta, setAyudaAbierta] = useState(false);
+  const hayAyuda = t.secciones.some((s) => s.pasos.some((p) => p.como || p.comprobar));
+
+  const editar = (cambios: Partial<Pick<Ronda, "referencia" | "notas" | "variante">>) =>
+    cambiarTrabajo(t.id, (e) => ({ ...e, actual: editarRonda(e.actual, cambios, ahoraISO()) }));
+  const marcarPaso = (id: string, cambios: Partial<MarcaPaso>) =>
+    cambiarTrabajo(t.id, (e) => ({ ...e, actual: marcar(e.actual, id, cambios, ahoraISO()) }));
+
+  const pulsarTerminar = () => {
+    const faltan = c.total - c.hecho;
+    const pregunta =
+      faltan > 0
+        ? `Quedan ${faltan} ${faltan === 1 ? "paso" : "pasos"} sin «Hecho». ¿Terminar igualmente? La lista se guarda en «Última vez» y se vacía.`
+        : "La lista se guarda en «Última vez» y se vacía para la próxima vez. ¿Terminar?";
+    if (window.confirm(pregunta)) cambiarTrabajo(t.id, (e) => terminar(t, e, ahoraISO()));
+  };
+
+  const variantes: Opcion[] = t.variantes.map((v) => ({ valor: v.id, texto: v.nombre, color: "default" }));
+
+  return (
+    <div className="max-w-[860px] pt-7">
+      <h2 className="flex items-center gap-2.5 text-2xl font-semibold">
+        <span aria-hidden="true">{t.icono}</span>
+        {t.nombre}
+      </h2>
+      {t.descripcion && <p className="mt-1 text-[15px] text-tinta-2">{t.descripcion}</p>}
+
+      {peticiones.length > 0 && (
+        <div className="mt-4">
+          <Aviso icono="📨">
+            <p className="font-medium">
+              {peticiones.length === 1 ? "1 petición abierta" : `${peticiones.length} peticiones abiertas`} de este
+              trabajo
+            </p>
+            <ul className="mt-1">
+              {peticiones.map((p) => (
+                <li key={p.id}>
+                  <button
+                    type="button"
+                    onClick={() => ir("peticiones", p.id)}
+                    className="text-left underline decoration-linea underline-offset-2 hover:decoration-tinta-2"
+                  >
+                    {p.que || "Sin título"}
+                    {p.quien && <span className="text-tinta-2"> · {p.quien}</span>}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </Aviso>
+        </div>
+      )}
+
+      <Propiedades>
+        <Propiedad icono="texto" nombre="A qué se refiere">
+          <CampoTexto
+            valor={r.referencia}
+            onCambiar={(referencia) => editar({ referencia })}
+            etiqueta="A qué se refiere"
+            placeholder={t.ejemploReferencia}
+          />
+        </Propiedad>
+        {variantes.length > 0 && (
+          <Propiedad icono="estado" nombre="Tipo">
+            <Selector
+              opciones={variantes}
+              valor={r.variante}
+              onCambiar={(variante) => editar({ variante })}
+              etiqueta="Tipo"
+              vacio="Elegir…"
+            />
+          </Propiedad>
+        )}
+        <Propiedad icono="hora" nombre="Empezada">
+          <span className="block px-1.5 pt-1.5 text-tinta-2">{r.empezada ? momentoLegible(r.empezada) : "—"}</span>
+        </Propiedad>
+        <Propiedad icono="texto" nombre="Notas">
+          <AreaTexto valor={r.notas} onCambiar={(notas) => editar({ notas })} etiqueta="Notas de esta vez" placeholder="Notas de esta vez" />
+        </Propiedad>
+      </Propiedades>
+
+      <section className="mt-6" aria-label="Checklist">
+        <div className="flex flex-wrap items-center justify-between gap-2 px-1.5">
+          <div className="flex flex-wrap items-center gap-3">
+            <h3 className="text-lg font-semibold">Checklist</h3>
+            {c.total > 0 && <Avance hechos={c.hecho} total={c.total} />}
+            {c.en_curso > 0 && <Etiqueta color="blue">{c.en_curso} en curso</Etiqueta>}
+            {c.problema > 0 && <Etiqueta color="red">{c.problema} con problema</Etiqueta>}
+            {c.bloqueado > 0 && <Etiqueta color="orange">{plural(c.bloqueado, "bloqueado", "bloqueados")}</Etiqueta>}
+          </div>
+          {hayAyuda && (
+            <Boton onClick={() => setAyudaAbierta((a) => !a)}>
+              {ayudaAbierta ? "Ocultar la ayuda" : "Ver la ayuda de todos los pasos"}
+            </Boton>
+          )}
+        </div>
+
+        {/* Tras «Terminar», las filas empiezan de cero (sin notas ni ayudas abiertas). */}
+        <div className="mt-2" key={estado.ultima?.terminada ?? "primera"}>
+          {totalPasos(t) === 0 ? (
+            <Aviso icono="💬">
+              Este trabajo aún no tiene pasos. Explícamelo en la sesión de Claude (qué lo dispara, los pasos en
+              orden, dónde se hace cada uno y cómo sabes que ha salido bien) y los escribo aquí.
+            </Aviso>
+          ) : secciones.length === 0 ? (
+            <Aviso icono="👆">Elige el tipo para ver sus pasos.</Aviso>
+          ) : (
+            secciones.map((s, i) => (
+              <div key={s.titulo || i} className="mt-3 first:mt-0">
+                {s.titulo && <h4 className="px-1.5 pb-1 pt-2 text-[15px] font-semibold">{s.titulo}</h4>}
+                {s.pasos.map((p) => (
+                  <FilaPaso
+                    key={p.id}
+                    paso={p}
+                    marca={marcaDe(r, p.id)}
+                    ayudaAbierta={ayudaAbierta}
+                    onCambiar={(cambios) => marcarPaso(p.id, cambios)}
+                  />
+                ))}
+              </div>
+            ))
+          )}
+        </div>
+        {variantes.length > 0 && r.variante === null && totalPasos(t) > 0 && secciones.length > 0 && (
+          <p className="mt-2 px-1.5 text-sm text-tinta-2">Elige el tipo para ver también sus pasos propios.</p>
+        )}
+      </section>
+
+      <div className="mt-6 flex flex-wrap items-center gap-3 px-1.5">
+        <Boton tipo="primario" onClick={pulsarTerminar} disabled={!rondaTocada(r)}>
+          Terminar
+        </Boton>
+        <span className="text-sm text-tinta-2">Guarda esta lista en «Última vez» y la deja vacía.</span>
+      </div>
+
+      <div className="mt-8 border-t border-linea pt-3">
+        {estado.ultima ? (
+          <Plegable
+            titulo={
+              <span className="font-medium">
+                Última vez{" "}
+                <span className="font-normal text-tinta-2">
+                  · terminada el {momentoLegible(estado.ultima.terminada)}
+                </span>
+              </span>
+            }
+          >
+            <UltimaVez u={estado.ultima} />
+          </Plegable>
+        ) : (
+          <p className="px-1.5 text-sm text-tinta-2">Aún no has terminado este trabajo ninguna vez.</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function FilaPaso({
+  paso,
+  marca,
+  ayudaAbierta,
+  onCambiar,
+}: {
+  paso: Paso;
+  marca: MarcaPaso;
+  ayudaAbierta: boolean;
+  onCambiar: (c: Partial<MarcaPaso>) => void;
+}) {
+  const [verNota, setVerNota] = useState(false);
+  const [verAyuda, setVerAyuda] = useState(false);
+  // Al marcar «Problema» o «Bloqueado», el cursor salta a la nota para contar qué pasa.
+  const [enfocarNota, setEnfocarNota] = useState(false);
+  const hecho = marca.estado === "hecho";
+  const conPega = marca.estado === "problema" || marca.estado === "bloqueado";
+  const notaVisible = verNota || marca.nota !== "" || conPega;
+  const tieneAyuda = Boolean(paso.como || paso.comprobar);
+  const ayudaVisible = tieneAyuda && (ayudaAbierta || verAyuda);
+
+  return (
+    <div className="group rounded px-1.5 py-1 hover:bg-hover">
+      <div className="flex items-start gap-2.5">
+        <span className="pt-[6px]">
+          <Casilla
+            marcada={hecho}
+            onCambiar={(v) => onCambiar({ estado: v ? "hecho" : "pendiente" })}
+            etiqueta={`Hecho: ${paso.titulo}`}
+          />
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className={`pt-[3px] text-[15px] leading-relaxed ${hecho ? "text-tinta-2 line-through" : ""}`}>
+            {paso.titulo}
+          </p>
+          {tieneAyuda && !ayudaAbierta && (
+            <button
+              type="button"
+              onClick={() => setVerAyuda((v) => !v)}
+              className="text-xs text-tinta-2 hover:text-tinta hover:underline"
+              aria-expanded={verAyuda}
+            >
+              {verAyuda ? "Ocultar ayuda" : "Cómo se hace y cómo comprobarlo"}
+            </button>
+          )}
+          {ayudaVisible && (
+            <div className="mt-1.5 space-y-1.5 rounded-md bg-fondo-2 px-3 py-2 text-sm leading-relaxed">
+              {paso.como && (
+                <p>
+                  <span className="font-medium">Cómo: </span>
+                  {paso.como}
+                </p>
+              )}
+              {paso.comprobar && (
+                <p>
+                  <span className="font-medium">Para saber que está bien: </span>
+                  {paso.comprobar}
+                </p>
+              )}
+            </div>
+          )}
+          {notaVisible && (
+            <div className="mt-1">
+              <AreaTexto
+                valor={marca.nota}
+                onCambiar={(nota) => onCambiar({ nota })}
+                etiqueta={`Nota de «${paso.titulo}»`}
+                placeholder={
+                  marca.estado === "problema"
+                    ? "¿Qué problema ha habido?"
+                    : marca.estado === "bloqueado"
+                      ? "¿Qué lo bloquea? ¿A quién esperas?"
+                      : "Nota"
+                }
+                autoFocus={(verNota || enfocarNota) && marca.nota === ""}
+                className="bg-fondo-2 text-sm"
+              />
+            </div>
+          )}
+        </div>
+        <div className="flex shrink-0 items-center gap-0.5">
+          {!notaVisible && (
+            <button
+              type="button"
+              onClick={() => setVerNota(true)}
+              className="rounded px-1.5 py-1 text-xs text-tinta-2 opacity-0 hover:bg-hover hover:text-tinta focus:opacity-100 group-hover:opacity-100"
+            >
+              + Nota
+            </button>
+          )}
+          <Selector
+            opciones={ESTADOS_PASO}
+            valor={marca.estado}
+            onCambiar={(estado) => {
+              setEnfocarNota(estado === "problema" || estado === "bloqueado");
+              onCambiar({ estado });
+            }}
+            etiqueta="Estado del paso"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function UltimaVez({ u }: { u: RondaTerminada }) {
+  const filas: [string, string][] = [
+    ["A qué se refería", u.referencia],
+    ["Tipo", u.variante ?? ""],
+    ["Empezada", momentoLegible(u.empezada)],
+    ["Terminada", momentoLegible(u.terminada)],
+  ];
+  return (
+    <div className="space-y-4 pb-2 text-sm">
+      <dl className="grid grid-cols-[150px_1fr] gap-x-3 gap-y-1">
+        {filas
+          .filter(([, v]) => v)
+          .map(([k, v]) => (
+            <div key={k} className="contents">
+              <dt className="text-tinta-2">{k}</dt>
+              <dd>{v}</dd>
+            </div>
+          ))}
+      </dl>
+      {u.notas && (
+        <div>
+          <p className="text-tinta-2">Notas</p>
+          <p className="whitespace-pre-wrap">{u.notas}</p>
+        </div>
+      )}
+      {u.pasos.length > 0 && (
+        <ul className="space-y-1">
+          {u.pasos.map((p, i) => {
+            const e = opcion(ESTADOS_PASO, p.estado);
+            const nuevaSeccion = p.seccion && p.seccion !== u.pasos[i - 1]?.seccion;
+            return (
+              <li key={i}>
+                {nuevaSeccion && <p className="pb-0.5 pt-2 font-semibold">{p.seccion}</p>}
+                <div className="flex items-start gap-2">
+                  <span className="w-24 shrink-0">
+                    <Etiqueta color={e.color}>{e.texto}</Etiqueta>
+                  </span>
+                  <div className="min-w-0">
+                    <p>{p.titulo}</p>
+                    {p.nota && <p className="whitespace-pre-wrap text-tinta-2">{p.nota}</p>}
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
