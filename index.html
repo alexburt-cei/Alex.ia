@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alex.ia</title>
+    <script>
+      // Tema antes de pintar, para que la app no parpadee en blanco al abrirla
+      // en modo oscuro. La misma clave la usa src/App.tsx.
+      try {
+        var tema = localStorage.getItem("alexia.tema");
+        if (tema === "oscuro" || (!tema && matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.classList.add("dark");
+        }
+      } catch (e) {
+        /* sin localStorage: tema claro */
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
