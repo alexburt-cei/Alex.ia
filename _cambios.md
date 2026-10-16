@@ -1,3 +1,13 @@
+# v0.2.0
+
+Cambio de descuentos ya tiene sus pasos, como cards cuadradas: al pulsar una se pone en verde; la
+primera que falta sale en blanco y las siguientes, semitransparentes. Con «···» se marca Problema
+(rojo) o Bloqueado (gris), con una nota. «Terminar» se activa cuando están todas en verde. El tipo
+(«Cambiar fecha» o «Cambiar porcentajes y fechas») se elige con dos botones, y «Próximo cambio» crea
+el recordatorio para ese día. «A qué se refiere» ya no está en ningún trabajo. Importar al CRM
+también usará cards.
+
+
 # v0.1.0
 
 Primera versión de Alex.ia, con pestañas arriba y estilo parecido a Notion, en claro y en oscuro.

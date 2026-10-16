@@ -1,11 +1,12 @@
 # Plan 1: Alex.ia, el centro de tareas del trabajo de Alexander
-Revisiones: 1 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
+Revisiones: 2 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
 
 ## 0. Registro de cambios
 
 | # | Fecha | Instrucción recibida | Tareas afectadas | Estado |
 |---|-------|----------------------|------------------|--------|
-| C1 | 15/10/2026 | Centralizar todas las tareas del trabajo, con los pasos de cada una para saber que se hacen bien y no olvidar nada: cada trabajo en una pestaña, con checklists y selectores de estado. Después: un mini dashboard inicial que no se llame «Resumen» y que recoja todas las pestañas («Tareas», «Proyectos abiertos», «Recordatorios»…), y una interfaz parecida a Notion. Respuestas: las de D1-D17 | B1 (T1.1-T1.8), B2-B4 | B1 aplicado (v0.1.0); B2-B4, pendientes de que Alexander explique cada trabajo |
+| C1 | 15/10/2026 | Centralizar todas las tareas del trabajo, con los pasos de cada una para saber que se hacen bien y no olvidar nada: cada trabajo en una pestaña, con checklists y selectores de estado. Después: un mini dashboard inicial que no se llame «Resumen» y que recoja todas las pestañas («Tareas», «Proyectos abiertos», «Recordatorios»…), y una interfaz parecida a Notion. Respuestas: las de D1-D17 | B1 (T1.1-T1.8), B2-B4 | B1 aplicado (v0.1.0) |
+| C2 | 16/10/2026 | Cambio de descuentos: quitar «A qué se refiere»; con «Cambiar fecha», aplazar la fecha de validez de los cupones en cei.es/informacion-becas-descuentos y actualizar la fecha de validez de los descuentos en todos los Productos de Zoho CRM; con «Cambiar porcentajes y fechas», cambiar fechas y porcentajes de la primera convocatoria en esa página, los porcentajes de los cupones en WooCommerce (se suele olvidar), la fecha de validez en los Productos de Zoho CRM y los porcentajes de la próxima convocatoria en CEI Pricing; guardar desde la tarea el recordatorio del próximo cambio; los pasos, como cards cuadradas que se ponen en verde, y «Terminar» solo con todas. Respuestas: las de D19-D23 | B2 (T2.1-T2.5) | aplicado (v0.2.0) |
 
 ## 1. Objetivo
 
@@ -41,6 +42,11 @@ trabajo se escriben con lo que él explique, nunca inventados.
 | D15 | Proyectos: estado (Abierto, En pausa, Esperando a alguien, Cerrado; los cerrados no se borran), próximo paso y su fecha, con quién y sus hitos | Respuesta, 15/10 |
 | D16 | Incidencias: sistema, estado y solución | Respuesta, 15/10 |
 | D17 | Peticiones: quién y por dónde, fecha límite, estado y un botón para abrir su tarea | Respuesta, 15/10 |
+| D19 | Cards cuadradas en Descuentos e Importar al CRM (SAGE, de momento, con la lista) | Respuesta, 16/10 |
+| D20 | Aspecto de las cards: Hecho en verde; la primera que falta, «En curso», en blanco; las siguientes, semitransparentes («Pendiente»); Problema en rojo; Bloqueado en gris (no se puede pulsar). Problema y Bloqueado se marcan con «···» y llevan nota | Respuestas, 16/10 |
+| D21 | «Terminar» se activa solo cuando todas las cards están en verde | Mensaje, 16/10 |
+| D22 | Sin «A qué se refiere» en ningún trabajo | Respuesta, 16/10 |
+| D23 | En Descuentos, «Próximo cambio»: una fecha y «Crear recordatorio», que crea «Cambio de descuentos» para ese día enlazado a la tarea | Respuesta, 16/10 |
 | D18 | Se trabaja siempre en la rama `main`, que Alexander actualiza en su ordenador con `git pull` | Respuesta, 16/10 |
 
 ## 3. Decisiones por defecto (pendientes del visto bueno de Alexander)
@@ -87,12 +93,21 @@ Las tomé para no parar la primera versión. Cada una se cambia sin tocar los da
   lo vacío, repetición, Esc, nota al marcar Problema) sin errores en la consola.
 - [x] T1.8 Documentación: este plan, `CLAUDE.md`, `README.md` y `_cambios.md`.
 
-### Bloque B2 — Pasos de «Cambio de descuentos» *(pendiente de la explicación de Alexander)*
+### Bloque B2 — Cambio de descuentos con cards *(v0.2.0)*
 
-Ya están sus dos variantes: «Cambiar fecha» y «Cambiar porcentajes y fechas». Falta todo lo demás (ver
-el guion de la sección 6).
+- [x] T2.1 Pasos de las dos variantes (ids `fecha-*` y `porcentajes-*`), con enlace a la página de
+  becas y descuentos y el aviso «Se suele olvidar» en WooCommerce.
+- [x] T2.2 Cards (`src/vistas/TarjetasPasos.tsx`) con el aspecto de D20 y su regla en
+  `aspectoCards()` (`src/lib/checklist.ts`); «Terminar» con `completa()`.
+- [x] T2.3 «A qué se refiere» fuera de la app (el dato se conserva en los datos antiguos).
+- [x] T2.4 «Próximo cambio» con su recordatorio enlazado, y los que ya hay, a la vista.
+- [x] T2.5 Comprobaciones: 15 reglas; recorrido en el navegador (marcar, problema con nota, Terminar
+  solo con todo, recordatorio) sin errores.
 
-### Bloque B3 — Pasos de «Importar al CRM» *(pendiente)*
+Pendiente de Alexander: los enlaces de los cupones de WooCommerce, de los Productos de Zoho CRM y de
+CEI Pricing, para ponerlos en sus cards; y, si quiere, cómo sabe que cada paso ha salido bien.
+
+### Bloque B3 — Pasos de «Importar al CRM» *(pendiente; ya sale con cards, D19)*
 
 Importar archivos al CRM y editar los registros creados. Falta saber de qué ficheros y registros se
 trata y si tiene relación con CEI Import.
@@ -124,4 +139,5 @@ Para cada trabajo de Tareas:
 - [x] B1: build, lint y verificar correctos; recorrido en el navegador sin errores
 - [ ] Visto bueno de Alexander abriendo la app (v0.1.0)
 - [ ] Visto bueno de Alexander a las decisiones por defecto P1-P12
-- [ ] B2, B3 y B4: pasos escritos con la explicación de Alexander
+- [ ] Visto bueno de Alexander a las cards de Descuentos (v0.2.0)
+- [ ] B3 y B4: pasos escritos con la explicación de Alexander
