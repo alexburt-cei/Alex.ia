@@ -1,5 +1,7 @@
 import { useState } from "react";
 import {
+  aspectoCards,
+  completa,
   editarRonda,
   estadoTrabajoVacio,
   marcaDe,
@@ -10,16 +12,19 @@ import {
   terminar,
   totalPasos,
 } from "../lib/checklist.ts";
-import { momentoLegible } from "../lib/fechas.ts";
+import { diaCorto, diaDe, momentoLegible } from "../lib/fechas.ts";
+import { nuevoRecordatorio } from "../lib/datos.ts";
 import { peticionesPendientes } from "../lib/inicio.ts";
-import { ESTADOS_PASO, opcion, type Opcion } from "../lib/opciones.ts";
+import { ESTADOS_PASO, opcion } from "../lib/opciones.ts";
 import { plural } from "../lib/texto.ts";
 import type { MarcaPaso, Paso, RondaTerminada, Ronda, Trabajo } from "../lib/tipos.ts";
-import { cambiarTrabajo, useDatos } from "../estado/almacen.ts";
+import { cambiarTrabajo, crear, useDatos } from "../estado/almacen.ts";
+import { useAhora } from "../estado/reloj.ts";
 import { ir } from "../estado/navegacion.ts";
 import { TRABAJOS, trabajoPorId } from "../trabajos/index.ts";
 import { Avance, Aviso, Boton, Casilla, Etiqueta, Pestanas, Plegable } from "../ui/basicos.tsx";
-import { AreaTexto, CampoTexto, Selector } from "../ui/campos.tsx";
+import { AreaTexto, CampoFecha, Selector } from "../ui/campos.tsx";
+import { TarjetasPasos } from "./TarjetasPasos.tsx";
 import { Pagina } from "../ui/Pagina.tsx";
 import { Propiedad, Propiedades } from "../ui/Peek.tsx";
 
@@ -60,10 +65,13 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
   const [ayudaAbierta, setAyudaAbierta] = useState(false);
   const hayAyuda = t.secciones.some((s) => s.pasos.some((p) => p.como || p.comprobar));
 
-  const editar = (cambios: Partial<Pick<Ronda, "referencia" | "notas" | "variante">>) =>
+  const editar = (cambios: Partial<Pick<Ronda, "notas" | "variante">>) =>
     cambiarTrabajo(t.id, (e) => ({ ...e, actual: editarRonda(e.actual, cambios, ahoraISO()) }));
   const marcarPaso = (id: string, cambios: Partial<MarcaPaso>) =>
     cambiarTrabajo(t.id, (e) => ({ ...e, actual: marcar(e.actual, id, cambios, ahoraISO()) }));
+
+  const conCards = t.vista === "cards";
+  const puedeTerminar = conCards ? completa(t, r) : rondaTocada(r);
 
   const pulsarTerminar = () => {
     const faltan = c.total - c.hecho;
@@ -74,7 +82,6 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
     if (window.confirm(pregunta)) cambiarTrabajo(t.id, (e) => terminar(t, e, ahoraISO()));
   };
 
-  const variantes: Opcion[] = t.variantes.map((v) => ({ valor: v.id, texto: v.nombre, color: "default" }));
 
   return (
     <div className="max-w-[860px] pt-7">
@@ -110,25 +117,29 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
       )}
 
       <Propiedades>
-        <Propiedad icono="texto" nombre="A qué se refiere">
-          <CampoTexto
-            valor={r.referencia}
-            onCambiar={(referencia) => editar({ referencia })}
-            etiqueta="A qué se refiere"
-            placeholder={t.ejemploReferencia}
-          />
-        </Propiedad>
-        {variantes.length > 0 && (
+        {t.variantes.length > 0 && (
           <Propiedad icono="estado" nombre="Tipo">
-            <Selector
-              opciones={variantes}
-              valor={r.variante}
-              onCambiar={(variante) => editar({ variante })}
-              etiqueta="Tipo"
-              vacio="Elegir…"
-            />
+            <div role="radiogroup" aria-label="Tipo" className="flex flex-wrap gap-1.5 pt-0.5">
+              {t.variantes.map((v) => (
+                <button
+                  key={v.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={r.variante === v.id}
+                  onClick={() => editar({ variante: v.id })}
+                  className={`rounded-md border px-3 py-1 text-sm transition-colors ${
+                    r.variante === v.id
+                      ? "border-tinta bg-tinta font-medium text-fondo"
+                      : "border-linea text-tinta hover:bg-hover"
+                  }`}
+                >
+                  {v.nombre}
+                </button>
+              ))}
+            </div>
           </Propiedad>
         )}
+        {t.proximoCambio && <ProximoCambio t={t} />}
         <Propiedad icono="hora" nombre="Empezada">
           <span className="block px-1.5 pt-1.5 text-tinta-2">{r.empezada ? momentoLegible(r.empezada) : "—"}</span>
         </Propiedad>
@@ -146,7 +157,7 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
             {c.problema > 0 && <Etiqueta color="red">{c.problema} con problema</Etiqueta>}
             {c.bloqueado > 0 && <Etiqueta color="orange">{plural(c.bloqueado, "bloqueado", "bloqueados")}</Etiqueta>}
           </div>
-          {hayAyuda && (
+          {hayAyuda && !conCards && (
             <Boton onClick={() => setAyudaAbierta((a) => !a)}>
               {ayudaAbierta ? "Ocultar la ayuda" : "Ver la ayuda de todos los pasos"}
             </Boton>
@@ -162,6 +173,13 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
             </Aviso>
           ) : secciones.length === 0 ? (
             <Aviso icono="👆">Elige el tipo para ver sus pasos.</Aviso>
+          ) : conCards ? (
+            <TarjetasPasos
+              pasos={secciones.flatMap((s) => s.pasos)}
+              aspecto={aspectoCards(t, r)}
+              marcas={(id) => marcaDe(r, id)}
+              onCambiar={marcarPaso}
+            />
           ) : (
             secciones.map((s, i) => (
               <div key={s.titulo || i} className="mt-3 first:mt-0">
@@ -179,16 +197,20 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
             ))
           )}
         </div>
-        {variantes.length > 0 && r.variante === null && totalPasos(t) > 0 && secciones.length > 0 && (
+        {t.variantes.length > 0 && r.variante === null && totalPasos(t) > 0 && secciones.length > 0 && (
           <p className="mt-2 px-1.5 text-sm text-tinta-2">Elige el tipo para ver también sus pasos propios.</p>
         )}
       </section>
 
       <div className="mt-6 flex flex-wrap items-center gap-3 px-1.5">
-        <Boton tipo="primario" onClick={pulsarTerminar} disabled={!rondaTocada(r)}>
+        <Boton tipo="primario" onClick={pulsarTerminar} disabled={!puedeTerminar}>
           Terminar
         </Boton>
-        <span className="text-sm text-tinta-2">Guarda esta lista en «Última vez» y la deja vacía.</span>
+        <span className="text-sm text-tinta-2">
+          {conCards && !puedeTerminar
+            ? "Se activa cuando todos los pasos están en verde."
+            : "Guarda esta lista en «Última vez» y la deja vacía."}
+        </span>
       </div>
 
       <div className="mt-8 border-t border-linea pt-3">
@@ -366,5 +388,58 @@ function UltimaVez({ u }: { u: RondaTerminada }) {
         </ul>
       )}
     </div>
+  );
+}
+
+/** Fecha del próximo cambio que te han anunciado: crea el recordatorio,
+ *  enlazado a este trabajo, y enseña los que ya hay. */
+function ProximoCambio({ t }: { t: Trabajo }) {
+  const datos = useDatos();
+  const hoy = diaDe(useAhora());
+  const [dia, setDia] = useState("");
+  const config = t.proximoCambio;
+  if (!config) return null;
+  const pendientes = datos.recordatorios
+    .filter((x) => !x.hecho && x.enlace?.tipo === "tarea" && x.enlace.id === t.id)
+    .sort((a, b) => a.fecha.localeCompare(b.fecha));
+
+  const crearRecordatorio = () => {
+    if (!dia) return;
+    crear(
+      "recordatorios",
+      nuevoRecordatorio(new Date().toISOString(), hoy, {
+        texto: config.texto,
+        fecha: dia,
+        ancla: dia,
+        enlace: { tipo: "tarea", id: t.id },
+      }),
+    );
+    setDia("");
+  };
+
+  return (
+    <Propiedad icono="fecha" nombre={config.etiqueta}>
+      <div className="flex flex-wrap items-center gap-1">
+        <CampoFecha valor={dia} onCambiar={setDia} etiqueta={config.etiqueta} />
+        <Boton tipo="borde" icono="mas" disabled={!dia} onClick={crearRecordatorio}>
+          Crear recordatorio
+        </Boton>
+      </div>
+      {pendientes.length > 0 && (
+        <div className="mt-1 flex flex-wrap gap-1.5 px-1.5">
+          {pendientes.map((x) => (
+            <button
+              key={x.id}
+              type="button"
+              onClick={() => ir("recordatorios", x.id)}
+              className="rounded bg-[var(--e-purple-bg)] px-1.5 text-xs leading-5 text-[var(--e-purple-tx)] hover:underline"
+              title="Abrir el recordatorio"
+            >
+              ⏰ {diaCorto(x.fecha, hoy)}
+            </button>
+          ))}
+        </div>
+      )}
+    </Propiedad>
   );
 }
