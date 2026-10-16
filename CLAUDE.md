@@ -9,6 +9,9 @@ Recordatorios · Incidencias · Peticiones · Notas. Estilo parecido a Notion.
 
 El plan vivo, con las decisiones y lo pendiente, está en `_plan.md`.
 
+**Rama de trabajo: `main`.** Alexander la usa en su ordenador y se actualiza con `git pull`, así que
+lo terminado se sube siempre a `main` (y a la rama de la sesión, si la hay).
+
 ## Regla principal
 
 **Preguntar a Alexander ante cualquier duda.** Los pasos de los trabajos de Tareas se escriben solo con

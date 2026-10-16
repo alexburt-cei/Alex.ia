@@ -1,5 +1,5 @@
 # Plan 1: Alex.ia, el centro de tareas del trabajo de Alexander
-Revisiones: 1 · Repositorio: `alexburt-cei/Alex.ia` · Rama: `claude/stoic-babbage-66fmko` · Creado: 15/10/2026
+Revisiones: 1 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
 
 ## 0. Registro de cambios
 
@@ -41,6 +41,7 @@ trabajo se escriben con lo que él explique, nunca inventados.
 | D15 | Proyectos: estado (Abierto, En pausa, Esperando a alguien, Cerrado; los cerrados no se borran), próximo paso y su fecha, con quién y sus hitos | Respuesta, 15/10 |
 | D16 | Incidencias: sistema, estado y solución | Respuesta, 15/10 |
 | D17 | Peticiones: quién y por dónde, fecha límite, estado y un botón para abrir su tarea | Respuesta, 15/10 |
+| D18 | Se trabaja siempre en la rama `main`, que Alexander actualiza en su ordenador con `git pull` | Respuesta, 16/10 |
 
 ## 3. Decisiones por defecto (pendientes del visto bueno de Alexander)
 
