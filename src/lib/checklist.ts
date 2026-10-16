@@ -96,3 +96,29 @@ export function terminar(t: Trabajo, e: EstadoTrabajo, ahora: string): EstadoTra
   };
   return { actual: rondaVacia(), ultima };
 }
+
+/** Cómo se ve cada card: «en_curso» es la primera que falta (ni hecha, ni con
+ *  problema, ni bloqueada); las demás que faltan quedan «pendiente». */
+export type AspectoCard = "hecho" | "en_curso" | "pendiente" | "problema" | "bloqueado";
+
+export function aspectoCards(t: Trabajo, r: Ronda): Record<string, AspectoCard> {
+  const res: Record<string, AspectoCard> = {};
+  let enCurso = false;
+  for (const s of seccionesVisibles(t, r.variante)) {
+    for (const p of s.pasos) {
+      const e = marcaDe(r, p.id).estado;
+      if (e === "hecho" || e === "problema" || e === "bloqueado") res[p.id] = e;
+      else if (!enCurso) {
+        res[p.id] = "en_curso";
+        enCurso = true;
+      } else res[p.id] = "pendiente";
+    }
+  }
+  return res;
+}
+
+/** Todos los pasos que tocan están hechos (y hay alguno). */
+export function completa(t: Trabajo, r: Ronda): boolean {
+  const c = recuento(t, r);
+  return c.total > 0 && c.hecho === c.total;
+}

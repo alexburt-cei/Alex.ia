@@ -1,17 +1,61 @@
 import type { Trabajo } from "../lib/tipos.ts";
 
-// Pendiente de que Alexander explique los pasos (plan, bloque B2). De momento
-// solo están las dos variantes que nombró: cambiar la fecha de un descuento, o
-// cambiar los porcentajes de los cupones y sus fechas.
+const PAGINA_BECAS = { texto: "Becas y descuentos", url: "https://cei.es/informacion-becas-descuentos/" };
+
+// Explicado por Alexander el 16/10/2026 (plan, C2). Los ids no se cambian:
+// las marcas guardadas van por ellos.
 export const DESCUENTOS: Trabajo = {
   id: "descuentos",
   nombre: "Cambio de descuentos",
   icono: "🏷️",
   descripcion: "Cambiar la fecha de un descuento, o los porcentajes de los cupones y sus fechas.",
-  ejemploReferencia: "Qué descuento o qué cupones",
+  vista: "cards",
+  proximoCambio: { etiqueta: "Próximo cambio", texto: "Cambio de descuentos" },
   variantes: [
     { id: "fecha", nombre: "Cambiar fecha" },
     { id: "porcentajes", nombre: "Cambiar porcentajes y fechas" },
   ],
-  secciones: [],
+  secciones: [
+    {
+      titulo: "",
+      pasos: [
+        {
+          id: "fecha-web",
+          titulo: "Aplazar la fecha de validez de los cupones en la web",
+          como: "En la página de becas y descuentos, cambiar la fecha de validez de los cupones al día que te han indicado.",
+          enlace: PAGINA_BECAS,
+          variantes: ["fecha"],
+        },
+        {
+          id: "fecha-crm",
+          titulo: "Actualizar la fecha de validez de los descuentos en todos los Productos de Zoho CRM",
+          variantes: ["fecha"],
+        },
+        {
+          id: "porcentajes-web",
+          titulo: "Cambiar las fechas y los porcentajes de la primera convocatoria en la web",
+          como: "En la página de becas y descuentos, los cupones de la primera convocatoria que aparece.",
+          enlace: PAGINA_BECAS,
+          variantes: ["porcentajes"],
+        },
+        {
+          id: "porcentajes-woo",
+          titulo: "Actualizar los porcentajes de los cupones en WooCommerce",
+          como: "Solo los cupones que cambian.",
+          importante: "Se suele olvidar",
+          variantes: ["porcentajes"],
+        },
+        {
+          id: "porcentajes-crm",
+          titulo: "Actualizar la nueva fecha de validez de los cupones en todos los Productos de Zoho CRM",
+          variantes: ["porcentajes"],
+        },
+        {
+          id: "porcentajes-pricing",
+          titulo: "Cambiar los porcentajes de la próxima convocatoria en CEI Pricing",
+          variantes: ["porcentajes"],
+        },
+      ],
+    },
+  ],
 };

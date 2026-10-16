@@ -6,7 +6,7 @@ export const SAGE: Trabajo = {
   nombre: "SAGE",
   icono: "🧾",
   descripcion: "",
-  ejemploReferencia: "A qué se refiere esta vez",
+  vista: "lista",
   variantes: [],
   secciones: [],
 };

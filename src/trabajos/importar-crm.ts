@@ -6,7 +6,7 @@ export const IMPORTAR_CRM: Trabajo = {
   nombre: "Importar al CRM",
   icono: "📥",
   descripcion: "Importar archivos al CRM y editar los registros creados.",
-  ejemploReferencia: "Qué ficheros o qué registros",
+  vista: "cards",
   variantes: [],
   secciones: [],
 };

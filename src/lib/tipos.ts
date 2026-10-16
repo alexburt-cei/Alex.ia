@@ -20,6 +20,10 @@ export interface Paso {
   comprobar?: string;
   /** Si solo vale para algunas variantes del trabajo, sus ids. */
   variantes?: string[];
+  /** Página donde se hace el paso; la card la enlaza. */
+  enlace?: { texto: string; url: string };
+  /** Un paso que se suele olvidar: la card lo avisa. */
+  importante?: string;
 }
 
 export interface Seccion {
@@ -37,8 +41,11 @@ export interface Trabajo {
   nombre: string;
   icono: string;
   descripcion: string;
-  /** Ejemplo para el campo «A qué se refiere». */
-  ejemploReferencia: string;
+  /** «cards»: un cuadrado por paso que se pone en verde al pulsarlo; «lista»:
+   *  una fila por paso con su estado. */
+  vista: "cards" | "lista";
+  /** Si tiene el campo para crear el recordatorio del próximo cambio. */
+  proximoCambio?: { etiqueta: string; texto: string };
   variantes: Variante[];
   secciones: Seccion[];
 }
@@ -50,6 +57,7 @@ export interface MarcaPaso {
 
 /** La lista en curso de un trabajo. */
 export interface Ronda {
+  /** Ya no se pide en la app (C2); se conserva por los datos antiguos. */
   referencia: string;
   notas: string;
   variante: string | null;

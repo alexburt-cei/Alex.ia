@@ -162,7 +162,7 @@ export function Inicio() {
                 </span>
                 <span className="mt-0.5 block truncate text-sm text-tinta-2">
                   {marcha
-                    ? e.actual.referencia || "En marcha"
+                    ? e.actual.notas.split("\n")[0] || "En marcha"
                     : e.ultima
                       ? `Última vez: ${momentoLegible(e.ultima.terminada)}`
                       : "Sin empezar"}

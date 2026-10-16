@@ -4,6 +4,8 @@
 
 import assert from "node:assert/strict";
 import {
+  aspectoCards,
+  completa,
   editarRonda,
   estadoTrabajoVacio,
   marcar,
@@ -140,7 +142,7 @@ const TRABAJO: Trabajo = {
   nombre: "Prueba",
   icono: "🧪",
   descripcion: "",
-  ejemploReferencia: "",
+  vista: "cards",
   variantes: [
     { id: "a", nombre: "Tipo A" },
     { id: "b", nombre: "Tipo B" },
@@ -190,6 +192,19 @@ prueba("marcar, contar y terminar", () => {
       ["Según el tipo", "Solo A", "problema", "No carga"],
     ],
   );
+});
+
+prueba("aspecto de las cards y lista completa", () => {
+  const t0 = "2026-10-16T09:00:00.000Z";
+  let r = editarRonda(estadoTrabajoVacio().actual, { variante: "b" }, t0);
+  assert.deepEqual(aspectoCards(TRABAJO, r), { comun: "en_curso", "solo-b": "pendiente" });
+  r = marcar(r, "comun", { estado: "problema" }, t0);
+  assert.deepEqual(aspectoCards(TRABAJO, r), { comun: "problema", "solo-b": "en_curso" });
+  assert.equal(completa(TRABAJO, r), false);
+  r = marcar(marcar(r, "comun", { estado: "hecho" }, t0), "solo-b", { estado: "hecho" }, t0);
+  assert.equal(completa(TRABAJO, r), true);
+  // Sin variante elegida solo cuenta el paso común.
+  assert.equal(completa(TRABAJO, { ...r, variante: null }), true);
 });
 
 // --- Datos y copia de seguridad --------------------------------------------
