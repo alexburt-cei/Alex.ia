@@ -36,7 +36,7 @@ export function Pagina({
       </div>
       <aside
         aria-label="Opciones"
-        className="mb-6 rounded-lg border border-linea bg-caja p-4 lg:sticky lg:top-[72px] lg:mt-10"
+        className="mb-6 rounded-2xl border border-linea bg-caja p-4 lg:sticky lg:top-[72px] lg:mt-10"
       >
         {lateral}
       </aside>

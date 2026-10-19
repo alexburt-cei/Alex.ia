@@ -257,7 +257,7 @@ function Bloque({
   children: ReactNode;
 }) {
   return (
-    <section aria-label={titulo} className="rounded-lg border border-linea bg-fondo-2 p-4">
+    <section aria-label={titulo} className="rounded-2xl border border-linea bg-fondo-2 p-4">
       <header className="flex items-start justify-between gap-2 border-b border-linea pb-2">
         <div className="flex min-w-0 flex-wrap items-center gap-2">
           <h2 className="flex items-center gap-2 text-lg font-semibold">
@@ -351,7 +351,7 @@ function GrupoTodo() {
   };
 
   return (
-    <section aria-label="To do" className="rounded-lg border border-linea bg-fondo-2 p-4">
+    <section aria-label="To do" className="rounded-2xl border border-linea bg-fondo-2 p-4">
       <header className="flex items-start justify-between gap-2 border-b border-linea pb-2">
         <div className="flex min-w-0 flex-wrap items-center gap-2">
           <h2 className="flex items-center gap-2 text-lg font-semibold">

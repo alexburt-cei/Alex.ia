@@ -87,7 +87,7 @@ export function Boton({
 
 export function Aviso({ icono, children }: { icono: string; children: ReactNode }) {
   return (
-    <div className="flex gap-3 rounded-md bg-fondo-2 px-4 py-3 text-sm leading-relaxed">
+    <div className="flex gap-3 rounded-xl bg-fondo-2 px-4 py-3 text-sm leading-relaxed">
       <span className="text-base leading-snug" aria-hidden="true">
         {icono}
       </span>

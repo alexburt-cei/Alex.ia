@@ -94,7 +94,7 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
               href={e.url}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-md bg-[var(--e-gray-bg)] px-3 py-1.5 text-sm font-medium text-[var(--e-gray-tx)] hover:underline"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--e-gray-bg)] px-3 py-1.5 text-sm font-medium text-[var(--e-gray-tx)] hover:underline"
             >
               <Icono nombre="abrir" className="h-3.5 w-3.5" />
               {e.texto}
@@ -239,7 +239,7 @@ function FilaPaso({
             </button>
           )}
           {ayudaVisible && (
-            <div className="mt-1.5 space-y-1.5 rounded-md bg-fondo-2 px-3 py-2 text-sm leading-relaxed">
+            <div className="mt-1.5 space-y-1.5 rounded-xl bg-fondo-2 px-3 py-2 text-sm leading-relaxed">
               {paso.como && (
                 <p>
                   <span className="font-medium">Cómo: </span>

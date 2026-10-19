@@ -38,7 +38,7 @@ export function Notas({ abierto }: { abierto: string | null }) {
             key={n.id}
             type="button"
             onClick={() => ir("notas", n.id)}
-            className={`flex h-[220px] flex-col rounded-lg border bg-caja p-4 text-left transition-colors hover:border-tinta-3 ${
+            className={`flex h-[220px] flex-col rounded-2xl border bg-caja p-4 text-left transition-colors hover:border-tinta-3 ${
               n.id === abierto ? "border-tinta-2" : "border-linea"
             }`}
           >
@@ -54,7 +54,7 @@ export function Notas({ abierto }: { abierto: string | null }) {
         <button
           type="button"
           onClick={nueva}
-          className="flex h-[220px] flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-linea text-sm text-tinta-2 hover:bg-hover hover:text-tinta"
+          className="flex h-[220px] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-linea text-sm text-tinta-2 hover:bg-hover hover:text-tinta"
         >
           <Icono nombre="mas" />
           Nueva nota

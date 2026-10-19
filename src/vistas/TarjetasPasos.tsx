@@ -105,7 +105,7 @@ function Tarjeta({
       aria-label={`Paso ${numero}: ${paso.titulo}. ${TEXTO[aspecto]}`}
       onClick={alternar}
       onKeyDown={tecla}
-      className={`flex h-[240px] flex-col overflow-hidden rounded-lg border p-3 text-left transition ${ESTILO[aspecto]}`}
+      className={`flex h-[240px] flex-col overflow-hidden rounded-2xl border p-3 text-left transition ${ESTILO[aspecto]}`}
     >
       <div className="flex items-center gap-2 text-xs font-medium">
         <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[rgba(0,0,0,0.08)] px-1.5 dark:bg-[rgba(255,255,255,0.12)]">

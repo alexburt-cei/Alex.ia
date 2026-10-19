@@ -65,7 +65,7 @@ export function Flotante({ ancla, boton, onCerrar, ancho = 220, children }: Prop
       ref={caja}
       data-flotante=""
       style={estilo}
-      className="desplazable fixed z-50 overflow-y-auto rounded-md bg-caja py-1 text-sm text-tinta shadow-flotante"
+      className="desplazable fixed z-50 overflow-y-auto rounded-xl bg-caja py-1 text-sm text-tinta shadow-flotante"
     >
       {children}
     </div>,

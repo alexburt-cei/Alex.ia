@@ -294,7 +294,7 @@ function Tablero<T extends { id: string }>({
               if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setSobre(null);
             }}
             onDrop={(e) => admite && soltar(e, o.valor)}
-            className={`flex min-w-[210px] flex-1 flex-col rounded-lg p-1.5 transition-colors ${
+            className={`flex min-w-[210px] flex-1 flex-col rounded-2xl p-1.5 transition-colors ${
               resaltada ? "bg-activo" : "bg-fondo-2"
             }`}
           >
@@ -317,7 +317,7 @@ function Tablero<T extends { id: string }>({
                     setSobre(null);
                   }}
                   onClick={() => onAbrir(x.id)}
-                  className={`cursor-pointer rounded-md border bg-caja p-2.5 text-sm shadow-sm transition-colors hover:bg-hover ${
+                  className={`cursor-pointer rounded-xl border bg-caja p-2.5 text-sm shadow-sm transition-colors hover:bg-hover ${
                     x.id === abierto ? "border-acento" : "border-linea"
                   } ${arrastrando === x.id ? "opacity-50" : ""}`}
                 >
