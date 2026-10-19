@@ -26,7 +26,8 @@ import { Avance, Aviso, Boton, Casilla, Etiqueta, Pestanas, Plegable } from "../
 import { AreaTexto, CampoFecha, Selector } from "../ui/campos.tsx";
 import { TarjetasPasos } from "./TarjetasPasos.tsx";
 import { Pagina } from "../ui/Pagina.tsx";
-import { Propiedad, Propiedades } from "../ui/Peek.tsx";
+import { Propiedad } from "../ui/Peek.tsx";
+import { Icono } from "../ui/Icono.tsx";
 
 export function Tareas({ trabajo }: { trabajo: string | null }) {
   const t = trabajoPorId(trabajo) ?? TRABAJOS[0];
@@ -35,6 +36,7 @@ export function Tareas({ trabajo }: { trabajo: string | null }) {
       icono="✅"
       titulo="Tareas"
       descripcion="Tus trabajos de siempre, paso a paso. Al acabar, «Terminar» guarda la lista en «Última vez» y la deja vacía para la próxima."
+      lateral={<PanelTrabajo key={t.id} t={t} />}
     >
       <div className="border-b border-linea">
         <Pestanas
@@ -61,12 +63,9 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
   const r = estado.actual;
   const secciones = seccionesVisibles(t, r.variante);
   const c = recuento(t, r);
-  const peticiones = peticionesPendientes(datos.peticiones).filter((p) => p.trabajo === t.id);
   const [ayudaAbierta, setAyudaAbierta] = useState(false);
   const hayAyuda = t.secciones.some((s) => s.pasos.some((p) => p.como || p.comprobar));
 
-  const editar = (cambios: Partial<Pick<Ronda, "notas" | "variante">>) =>
-    cambiarTrabajo(t.id, (e) => ({ ...e, actual: editarRonda(e.actual, cambios, ahoraISO()) }));
   const marcarPaso = (id: string, cambios: Partial<MarcaPaso>) =>
     cambiarTrabajo(t.id, (e) => ({ ...e, actual: marcar(e.actual, id, cambios, ahoraISO()) }));
 
@@ -91,69 +90,22 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
       </h2>
       {t.descripcion && <p className="mt-1 text-[15px] text-tinta-2">{t.descripcion}</p>}
 
-      {/* A lo ancho: a la izquierda, cómo es esta vez; a la derecha, cuándo empezó, notas y peticiones. */}
-      <div className="grid gap-x-12 lg:grid-cols-2">
-        <Propiedades>
-        {t.variantes.length > 0 && (
-          <Propiedad icono="estado" nombre="Tipo">
-            <div role="radiogroup" aria-label="Tipo" className="flex flex-wrap gap-1.5 pt-0.5">
-              {t.variantes.map((v) => (
-                <button
-                  key={v.id}
-                  type="button"
-                  role="radio"
-                  aria-checked={r.variante === v.id}
-                  onClick={() => editar({ variante: v.id })}
-                  className={`rounded-md border px-3 py-1 text-sm transition-colors ${
-                    r.variante === v.id
-                      ? "border-tinta bg-tinta font-medium text-fondo"
-                      : "border-linea text-tinta hover:bg-hover"
-                  }`}
-                >
-                  {v.nombre}
-                </button>
-              ))}
-            </div>
-          </Propiedad>
-        )}
-        {t.proximoCambio && <ProximoCambio t={t} />}
-        </Propiedades>
-        <div>
-          <Propiedades>
-        <Propiedad icono="hora" nombre="Empezada">
-          <span className="block px-1.5 pt-1.5 text-tinta-2">{r.empezada ? momentoLegible(r.empezada) : "—"}</span>
-        </Propiedad>
-        <Propiedad icono="texto" nombre="Notas">
-          <AreaTexto valor={r.notas} onCambiar={(notas) => editar({ notas })} etiqueta="Notas de esta vez" placeholder="Notas de esta vez" />
-        </Propiedad>
-          </Propiedades>
-      {peticiones.length > 0 && (
-        <div className="mt-4">
-          <Aviso icono="📨">
-            <p className="font-medium">
-              {peticiones.length === 1 ? "1 petición abierta" : `${peticiones.length} peticiones abiertas`} de este
-              trabajo
-            </p>
-            <ul className="mt-1">
-              {peticiones.map((p) => (
-                <li key={p.id}>
-                  <button
-                    type="button"
-                    onClick={() => ir("peticiones", p.id)}
-                    className="text-left underline decoration-linea underline-offset-2 hover:decoration-tinta-2"
-                  >
-                    {p.que || "Sin título"}
-                    {p.quien && <span className="text-tinta-2"> · {p.quien}</span>}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </Aviso>
+      {t.enlaces && t.enlaces.length > 0 && (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {t.enlaces.map((e) => (
+            <a
+              key={e.url}
+              href={e.url}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-md bg-[var(--e-gray-bg)] px-3 py-1.5 text-sm font-medium text-[var(--e-gray-tx)] hover:underline"
+            >
+              <Icono nombre="abrir" className="h-3.5 w-3.5" />
+              {e.texto}
+            </a>
+          ))}
         </div>
       )}
-
-        </div>
-      </div>
 
       <section className="mt-6" aria-label="Checklist">
         <div className="flex flex-wrap items-center justify-between gap-2 px-1.5">
@@ -401,6 +353,75 @@ function UltimaVez({ u }: { u: RondaTerminada }) {
   );
 }
 
+/** Las opciones del trabajo, en el cuadro de arriba a la derecha: tipo,
+ *  próximo cambio, cuándo empezó, notas y peticiones abiertas. */
+function PanelTrabajo({ t }: { t: Trabajo }) {
+  const datos = useDatos();
+  const r = (datos.trabajos[t.id] ?? estadoTrabajoVacio()).actual;
+  const peticiones = peticionesPendientes(datos.peticiones).filter((p) => p.trabajo === t.id);
+  const editar = (cambios: Partial<Pick<Ronda, "notas" | "variante">>) =>
+    cambiarTrabajo(t.id, (e) => ({ ...e, actual: editarRonda(e.actual, cambios, ahoraISO()) }));
+
+  return (
+    <div className="space-y-2">
+        {t.variantes.length > 0 && (
+          <Propiedad icono="estado" nombre="Tipo" apilada>
+            <div role="radiogroup" aria-label="Tipo" className="flex flex-wrap gap-1.5 px-1.5 pt-0.5">
+              {t.variantes.map((v) => (
+                <button
+                  key={v.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={r.variante === v.id}
+                  onClick={() => editar({ variante: v.id })}
+                  className={`rounded-md border px-3 py-1 text-sm transition-colors ${
+                    r.variante === v.id
+                      ? "border-tinta bg-tinta font-medium text-fondo"
+                      : "border-linea text-tinta hover:bg-hover"
+                  }`}
+                >
+                  {v.nombre}
+                </button>
+              ))}
+            </div>
+          </Propiedad>
+        )}
+      {t.proximoCambio && <ProximoCambio t={t} />}
+      <Propiedad icono="hora" nombre="Empezada" apilada>
+        <span className="block px-1.5 pt-0.5 text-tinta-2">{r.empezada ? momentoLegible(r.empezada) : "—"}</span>
+      </Propiedad>
+      <Propiedad icono="texto" nombre="Notas" apilada>
+        <AreaTexto valor={r.notas} onCambiar={(notas) => editar({ notas })} etiqueta="Notas de esta vez" placeholder="Notas de esta vez" filas={2} />
+      </Propiedad>
+      {peticiones.length > 0 && (
+        <div className="pt-2">
+          <Aviso icono="📨">
+            <p className="font-medium">
+              {peticiones.length === 1 ? "1 petición abierta" : `${peticiones.length} peticiones abiertas`} de este
+              trabajo
+            </p>
+            <ul className="mt-1">
+              {peticiones.map((p) => (
+                <li key={p.id}>
+                  <button
+                    type="button"
+                    onClick={() => ir("peticiones", p.id)}
+                    className="text-left underline decoration-linea underline-offset-2 hover:decoration-tinta-2"
+                  >
+                    {p.que || "Sin título"}
+                    {p.quien && <span className="text-tinta-2"> · {p.quien}</span>}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </Aviso>
+        </div>
+      )}
+
+    </div>
+  );
+}
+
 /** Fecha del próximo cambio que te han anunciado: crea el recordatorio,
  *  enlazado a este trabajo, y enseña los que ya hay. */
 function ProximoCambio({ t }: { t: Trabajo }) {
@@ -428,7 +449,7 @@ function ProximoCambio({ t }: { t: Trabajo }) {
   };
 
   return (
-    <Propiedad icono="fecha" nombre={config.etiqueta}>
+    <Propiedad icono="fecha" nombre={config.etiqueta} apilada>
       <div className="flex flex-wrap items-center gap-1">
         <CampoFecha valor={dia} onCambiar={setDia} etiqueta={config.etiqueta} />
         <Boton tipo="borde" icono="mas" disabled={!dia} onClick={crearRecordatorio}>

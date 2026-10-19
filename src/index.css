@@ -3,16 +3,21 @@
 @tailwind utilities;
 
 /* ===== Colores =====
+   Fondos de página: gris muy claro u oscuro, nunca blanco o negro puros
+   (--fondo). El blanco y el negro puros (--caja) quedan para los cuadros
+   especiales: el panel de opciones, el panel lateral, los menús y las
+   tarjetas.
    Inspirados en Notion. Los textos secundarios están algo más oscuros que los
    de Notion para que se lean bien (contraste AA, 4,5:1) sobre el fondo blanco
    y sobre el gris de las cabeceras. --tinta-3 es solo para textos de ejemplo
    e iconos de adorno. */
 :root {
   color-scheme: light;
-  --fondo: #ffffff;
-  --fondo-2: #f7f7f5;
+  --fondo: #f7f7f5;
+  --fondo-2: #ededea;
+  --caja: #ffffff;
   --tinta: #37352f;
-  --tinta-2: #6f6e69;
+  --tinta-2: #696863;
   --tinta-3: #a5a4a0;
   --linea: #e9e9e7;
   --hover: rgba(55, 53, 47, 0.06);
@@ -20,7 +25,7 @@
   --acento: #1f6fc5;
   --acento-texto: #1f6fc5;
   --rojo: #c4403b;
-  --naranja: #b25a06;
+  --naranja: #a95505;
   --progreso: #4dab9a;
   --sombra-flotante: 0 0 0 1px rgba(15, 15, 15, 0.05), 0 3px 6px rgba(15, 15, 15, 0.1),
     0 9px 24px rgba(15, 15, 15, 0.2);
@@ -52,7 +57,8 @@
 .dark {
   color-scheme: dark;
   --fondo: #191919;
-  --fondo-2: #202020;
+  --fondo-2: #252525;
+  --caja: #000000;
   --tinta: #d4d4d4;
   --tinta-2: #9b9b9b;
   --tinta-3: #6b6b6b;
@@ -172,7 +178,7 @@ body {
   }
   .campo:hover { background: var(--hover); }
   .campo:focus {
-    background: var(--fondo);
+    background: var(--caja);
     box-shadow: 0 0 0 1px var(--linea), 0 0 0 3px rgba(35, 131, 226, 0.25);
   }
   .campo::placeholder { color: var(--tinta-3); }

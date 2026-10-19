@@ -29,9 +29,9 @@ export function Peek({
   return createPortal(
     <aside
       aria-label="Detalle"
-      className="desplazable fixed inset-y-0 right-0 z-40 w-full overflow-y-auto bg-fondo shadow-peek sm:w-[580px]"
+      className="desplazable fixed inset-y-0 right-0 z-40 w-full overflow-y-auto bg-caja shadow-peek sm:w-[580px]"
     >
-      <div className="sticky top-0 z-10 flex h-11 items-center justify-between bg-fondo px-2">
+      <div className="sticky top-0 z-10 flex h-11 items-center justify-between bg-caja px-2">
         <Boton icono="cerrar" title="Cerrar (Esc)" onClick={onCerrar} />
         <Boton
           icono="papelera"
@@ -89,14 +89,19 @@ export function Propiedades({ children }: { children: ReactNode }) {
 export function Propiedad({
   icono,
   nombre,
+  apilada = false,
   children,
 }: {
   icono: NombreIcono;
   nombre: string;
+  /** El nombre encima del valor (en columnas estrechas). */
+  apilada?: boolean;
   children: ReactNode;
 }) {
   return (
-    <div className="flex min-h-[34px] flex-col gap-0.5 sm:flex-row sm:items-start sm:gap-1">
+    <div
+      className={`flex min-h-[34px] flex-col gap-0.5 ${apilada ? "" : "sm:flex-row sm:items-start sm:gap-1"}`}
+    >
       <div className="flex w-44 shrink-0 items-center gap-2 px-1.5 pt-1.5 text-sm text-tinta-2">
         <Icono nombre={icono} />
         {nombre}

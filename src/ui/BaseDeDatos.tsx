@@ -317,7 +317,7 @@ function Tablero<T extends { id: string }>({
                     setSobre(null);
                   }}
                   onClick={() => onAbrir(x.id)}
-                  className={`cursor-pointer rounded-md border bg-fondo p-2.5 text-sm shadow-sm transition-colors hover:bg-hover ${
+                  className={`cursor-pointer rounded-md border bg-caja p-2.5 text-sm shadow-sm transition-colors hover:bg-hover ${
                     x.id === abierto ? "border-acento" : "border-linea"
                   } ${arrastrando === x.id ? "opacity-50" : ""}`}
                 >

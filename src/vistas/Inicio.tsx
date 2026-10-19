@@ -264,7 +264,7 @@ function Cifra({
     <button
       type="button"
       onClick={() => ir(pagina)}
-      className="flex flex-col items-start rounded-lg border border-linea px-3.5 py-3 text-left transition-colors hover:bg-hover"
+      className="flex flex-col items-start rounded-lg border border-linea bg-caja px-3.5 py-3 text-left transition-colors hover:bg-hover"
     >
       <span className="flex items-center gap-1.5 text-sm text-tinta-2">
         <span aria-hidden="true">{icono}</span>

@@ -11,6 +11,7 @@ export default {
       colors: {
         fondo: "var(--fondo)",
         "fondo-2": "var(--fondo-2)",
+        caja: "var(--caja)",
         tinta: "var(--tinta)",
         "tinta-2": "var(--tinta-2)",
         "tinta-3": "var(--tinta-3)",

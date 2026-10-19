@@ -11,8 +11,8 @@ import { Icono } from "../ui/Icono.tsx";
 
 const ESTILO: Record<AspectoCard, string> = {
   hecho: "border-transparent bg-[var(--e-green-bg)] text-[var(--e-green-tx)] cursor-pointer",
-  en_curso: "border-tinta-2 bg-fondo shadow-md cursor-pointer",
-  pendiente: "border-linea bg-fondo opacity-50 hover:opacity-80 cursor-pointer",
+  en_curso: "border-tinta-2 bg-caja shadow-md cursor-pointer",
+  pendiente: "border-linea bg-caja opacity-50 hover:opacity-80 cursor-pointer",
   problema: "border-transparent bg-[var(--e-red-bg)] text-[var(--e-red-tx)] cursor-pointer",
   bloqueado: "border-transparent bg-[var(--e-gray-bg)] text-[var(--e-gray-tx)] opacity-75 cursor-not-allowed",
 };
