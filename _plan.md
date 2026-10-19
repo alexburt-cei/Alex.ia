@@ -1,5 +1,5 @@
 # Plan 1: Alex.ia, el centro de tareas del trabajo de Alexander
-Revisiones: 4 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
+Revisiones: 5 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
 
 ## 0. Registro de cambios
 
@@ -9,6 +9,7 @@ Revisiones: 4 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` 
 | C2 | 16/10/2026 | Cambio de descuentos: quitar «A qué se refiere»; con «Cambiar fecha», aplazar la fecha de validez de los cupones en cei.es/informacion-becas-descuentos y actualizar la fecha de validez de los descuentos en todos los Productos de Zoho CRM; con «Cambiar porcentajes y fechas», cambiar fechas y porcentajes de la primera convocatoria en esa página, los porcentajes de los cupones en WooCommerce (se suele olvidar), la fecha de validez en los Productos de Zoho CRM y los porcentajes de la próxima convocatoria en CEI Pricing; guardar desde la tarea el recordatorio del próximo cambio; los pasos, como cards cuadradas que se ponen en verde, y «Terminar» solo con todas. Respuestas: las de D19-D23 | B2 (T2.1-T2.5) | aplicado (v0.2.0) |
 | C3 | 19/10/2026 | Sin enlaces en las cards (bastan los que hay) y sin «cómo comprobarlo»: la revisión es manual. Aprovechar todo el ancho siempre que se pueda: los pasos de las tareas en una sola fila y lo pequeño, en la mitad derecha | B2 (T2.6) | aplicado (v0.2.1) |
 | C4 | 19/10/2026 | Enlace «JS Cupones» (editor del tema, `fc_js.js`) justo antes de la checklist, en un recuadro gris claro con texto gris oscuro; enlace a los cupones de WooCommerce en su paso; las opciones del trabajo, en una sola columna arriba a la derecha, en un cuadro blanco, reutilizable; nunca #FFF ni #000 de fondo de página (gris muy claro y muy oscuro) y sí para cuadros especiales | B2 (T2.7-T2.9) | aplicado (v0.3.0) |
+| C5 | 19/10/2026 | «Tipo», como un desplegable (select) con sus opciones en vez de botones | B2 (T2.10) | aplicado (v0.3.1) |
 
 ## 1. Objetivo
 
@@ -121,6 +122,7 @@ Las tomé para no parar la primera versión. Cada una se cambia sin tocar los da
 - [x] T2.9 Fondos: página en gris muy claro (#f7f7f5) o muy oscuro (#191919); `--caja` (#fff / #000)
   para el cuadro de opciones, el panel lateral, los menús y las tarjetas. Contraste AA revisado con
   los fondos nuevos.
+- [x] T2.10 «Tipo», un `<select>` con «Elige el tipo…» y una opción por variante (C5).
 
 ### Bloque B3 — Pasos de «Importar al CRM» *(pendiente; ya sale con cards, D19)*
 

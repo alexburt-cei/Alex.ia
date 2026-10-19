@@ -1,3 +1,8 @@
+# v0.3.1
+
+En Tareas, el «Tipo» se elige en un desplegable con sus opciones.
+
+
 # v0.3.0
 
 En Tareas, las opciones de cada trabajo (Tipo, Próximo cambio, Empezada, Notas y las peticiones) van en
