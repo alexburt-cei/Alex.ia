@@ -13,7 +13,7 @@ export function Pagina({
   children: ReactNode;
 }) {
   return (
-    <div className="mx-auto w-full max-w-[1240px] px-4 pb-24 sm:px-12">
+    <div className="mx-auto w-full px-4 pb-24 sm:px-12">
       <header className="pb-5 pt-10">
         <div className="text-5xl leading-none" aria-hidden="true">
           {icono}

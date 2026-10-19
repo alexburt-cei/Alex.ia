@@ -294,7 +294,7 @@ function Tablero<T extends { id: string }>({
               if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setSobre(null);
             }}
             onDrop={(e) => admite && soltar(e, o.valor)}
-            className={`flex min-w-[210px] max-w-[300px] flex-1 flex-col rounded-lg p-1.5 transition-colors ${
+            className={`flex min-w-[210px] flex-1 flex-col rounded-lg p-1.5 transition-colors ${
               resaltada ? "bg-activo" : "bg-fondo-2"
             }`}
           >

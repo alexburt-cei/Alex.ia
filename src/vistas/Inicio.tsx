@@ -98,7 +98,7 @@ export function Inicio() {
         />
       </div>
 
-      <div className="mt-10 grid gap-x-12 gap-y-10 lg:grid-cols-2">
+      <div className="mt-10 grid gap-x-12 gap-y-10 lg:grid-cols-2 2xl:grid-cols-3">
         <Bloque
           icono="⏰"
           titulo="Recordatorios"
@@ -152,9 +152,9 @@ export function Inicio() {
               <span className="min-w-0 flex-1">
                 <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
                   <span className="font-medium">{t.nombre}</span>
-                  {totalPasos(t) > 0 ? (
+                  {c.total > 0 ? (
                     <Avance hechos={c.hecho} total={c.total} />
-                  ) : (
+                  ) : totalPasos(t) > 0 ? null : (
                     <span className="text-xs text-tinta-2">Sin pasos todavía</span>
                   )}
                   {c.problema > 0 && <Etiqueta color="red">{c.problema} con problema</Etiqueta>}

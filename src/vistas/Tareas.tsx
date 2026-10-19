@@ -84,13 +84,49 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
 
 
   return (
-    <div className="max-w-[860px] pt-7">
+    <div className="pt-7">
       <h2 className="flex items-center gap-2.5 text-2xl font-semibold">
         <span aria-hidden="true">{t.icono}</span>
         {t.nombre}
       </h2>
       {t.descripcion && <p className="mt-1 text-[15px] text-tinta-2">{t.descripcion}</p>}
 
+      {/* A lo ancho: a la izquierda, cómo es esta vez; a la derecha, cuándo empezó, notas y peticiones. */}
+      <div className="grid gap-x-12 lg:grid-cols-2">
+        <Propiedades>
+        {t.variantes.length > 0 && (
+          <Propiedad icono="estado" nombre="Tipo">
+            <div role="radiogroup" aria-label="Tipo" className="flex flex-wrap gap-1.5 pt-0.5">
+              {t.variantes.map((v) => (
+                <button
+                  key={v.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={r.variante === v.id}
+                  onClick={() => editar({ variante: v.id })}
+                  className={`rounded-md border px-3 py-1 text-sm transition-colors ${
+                    r.variante === v.id
+                      ? "border-tinta bg-tinta font-medium text-fondo"
+                      : "border-linea text-tinta hover:bg-hover"
+                  }`}
+                >
+                  {v.nombre}
+                </button>
+              ))}
+            </div>
+          </Propiedad>
+        )}
+        {t.proximoCambio && <ProximoCambio t={t} />}
+        </Propiedades>
+        <div>
+          <Propiedades>
+        <Propiedad icono="hora" nombre="Empezada">
+          <span className="block px-1.5 pt-1.5 text-tinta-2">{r.empezada ? momentoLegible(r.empezada) : "—"}</span>
+        </Propiedad>
+        <Propiedad icono="texto" nombre="Notas">
+          <AreaTexto valor={r.notas} onCambiar={(notas) => editar({ notas })} etiqueta="Notas de esta vez" placeholder="Notas de esta vez" />
+        </Propiedad>
+          </Propiedades>
       {peticiones.length > 0 && (
         <div className="mt-4">
           <Aviso icono="📨">
@@ -116,37 +152,8 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
         </div>
       )}
 
-      <Propiedades>
-        {t.variantes.length > 0 && (
-          <Propiedad icono="estado" nombre="Tipo">
-            <div role="radiogroup" aria-label="Tipo" className="flex flex-wrap gap-1.5 pt-0.5">
-              {t.variantes.map((v) => (
-                <button
-                  key={v.id}
-                  type="button"
-                  role="radio"
-                  aria-checked={r.variante === v.id}
-                  onClick={() => editar({ variante: v.id })}
-                  className={`rounded-md border px-3 py-1 text-sm transition-colors ${
-                    r.variante === v.id
-                      ? "border-tinta bg-tinta font-medium text-fondo"
-                      : "border-linea text-tinta hover:bg-hover"
-                  }`}
-                >
-                  {v.nombre}
-                </button>
-              ))}
-            </div>
-          </Propiedad>
-        )}
-        {t.proximoCambio && <ProximoCambio t={t} />}
-        <Propiedad icono="hora" nombre="Empezada">
-          <span className="block px-1.5 pt-1.5 text-tinta-2">{r.empezada ? momentoLegible(r.empezada) : "—"}</span>
-        </Propiedad>
-        <Propiedad icono="texto" nombre="Notas">
-          <AreaTexto valor={r.notas} onCambiar={(notas) => editar({ notas })} etiqueta="Notas de esta vez" placeholder="Notas de esta vez" />
-        </Propiedad>
-      </Propiedades>
+        </div>
+      </div>
 
       <section className="mt-6" aria-label="Checklist">
         <div className="flex flex-wrap items-center justify-between gap-2 px-1.5">
@@ -202,7 +209,9 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
         )}
       </section>
 
-      <div className="mt-6 flex flex-wrap items-center gap-3 px-1.5">
+      {/* Terminar a la izquierda y «Última vez» a la derecha. */}
+      <div className="mt-6 grid gap-x-12 gap-y-6 border-t border-linea pt-4 lg:grid-cols-2">
+      <div className="flex flex-wrap items-start gap-3 px-1.5">
         <Boton tipo="primario" onClick={pulsarTerminar} disabled={!puedeTerminar}>
           Terminar
         </Boton>
@@ -213,7 +222,7 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
         </span>
       </div>
 
-      <div className="mt-8 border-t border-linea pt-3">
+      <div>
         {estado.ultima ? (
           <Plegable
             titulo={
@@ -230,6 +239,7 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
         ) : (
           <p className="px-1.5 text-sm text-tinta-2">Aún no has terminado este trabajo ninguna vez.</p>
         )}
+      </div>
       </div>
     </div>
   );

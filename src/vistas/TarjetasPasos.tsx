@@ -44,7 +44,8 @@ export function TarjetasPasos({
   onCambiar: (id: string, c: Partial<MarcaPaso>) => void;
 }) {
   return (
-    <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+    // Todas en una fila a lo ancho de la página (en pantallas estrechas, de dos en dos).
+    <div className="grid grid-cols-2 gap-3 md:auto-cols-fr md:grid-flow-col md:grid-cols-none">
       {pasos.map((p, i) => (
         <Tarjeta
           key={p.id}
@@ -104,7 +105,7 @@ function Tarjeta({
       aria-label={`Paso ${numero}: ${paso.titulo}. ${TEXTO[aspecto]}`}
       onClick={alternar}
       onKeyDown={tecla}
-      className={`flex aspect-square flex-col overflow-hidden rounded-lg border p-3 text-left transition ${ESTILO[aspecto]}`}
+      className={`flex h-[240px] flex-col overflow-hidden rounded-lg border p-3 text-left transition ${ESTILO[aspecto]}`}
     >
       <div className="flex items-center gap-2 text-xs font-medium">
         <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[rgba(0,0,0,0.08)] px-1.5 dark:bg-[rgba(255,255,255,0.12)]">

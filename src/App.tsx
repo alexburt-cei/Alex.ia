@@ -31,7 +31,7 @@ export default function App() {
       <BarraSuperior ruta={ruta} />
       {error && (
         <div role="alert" className="border-b border-linea bg-[var(--e-red-bg)] text-[var(--e-red-tx)]">
-          <p className="mx-auto flex max-w-[1240px] items-center gap-2 px-4 py-2 text-sm sm:px-12">
+          <p className="mx-auto flex items-center gap-2 px-4 py-2 text-sm sm:px-12">
             <Icono nombre="aviso" />
             {error}
           </p>
@@ -70,7 +70,7 @@ function BarraSuperior({ ruta }: { ruta: Ruta }) {
 
   return (
     <header className="sticky top-0 z-30 border-b border-linea bg-fondo">
-      <div className="mx-auto flex max-w-[1240px] items-center justify-between px-3 pt-2 sm:px-11">
+      <div className="mx-auto flex items-center justify-between px-3 pt-2 sm:px-11">
         <a
           href="#/inicio"
           className="flex items-center gap-2 rounded px-1.5 py-1 text-[15px] font-semibold hover:bg-hover"
@@ -88,7 +88,7 @@ function BarraSuperior({ ruta }: { ruta: Ruta }) {
           <MenuMas />
         </div>
       </div>
-      <nav aria-label="Pestañas" className="mx-auto max-w-[1240px] px-2 pt-1 sm:px-10">
+      <nav aria-label="Pestañas" className="mx-auto px-2 pt-1 sm:px-10">
         <Pestanas
           etiqueta="Pestañas"
           valor={ruta.pagina}
