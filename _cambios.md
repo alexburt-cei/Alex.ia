@@ -1,3 +1,9 @@
+# v0.4.1
+
+Cada nota es un documento: en Notas salen como tarjetas con su texto y, al abrir una, aparece entera
+por la derecha para leerla y escribirla. Los grupos de Inicio recuperan sus iconos.
+
+
 # v0.4.0
 
 Inicio se ordena por grupos, cada uno en su cuadro y con sus cifras en pills: To do, Tareas,

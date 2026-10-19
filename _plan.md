@@ -1,5 +1,5 @@
 # Plan 1: Alex.ia, el centro de tareas del trabajo de Alexander
-Revisiones: 7 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
+Revisiones: 8 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
 
 ## 0. Registro de cambios
 
@@ -12,6 +12,7 @@ Revisiones: 7 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` 
 | C5 | 19/10/2026 | «Tipo», como un desplegable (select) con sus opciones en vez de botones | B2 (T2.10) | aplicado (v0.3.1) |
 | C6 | 19/10/2026 | El 5173 estaba ocupado (CEI Import): la app pasa al puerto 5180. Los datos del 5173 se llevan con una copia de seguridad (descargar en el 5173 y restaurar en el 5180) | D3 | aplicado (v0.3.2) |
 | C7 | 19/10/2026 | Sin iconos grandes en los títulos; modo claro por defecto; en Inicio, los grupos en orden Tareas, Recordatorios, Proyectos abiertos, Peticiones, Notas e Incidencias, cada uno en su cuadro (no blanco), sin la fila de cifras (pasan a pills en cada grupo); tonos crema, beige y grises en toda la app. Después: un grupo nuevo «To do», siempre el primero | B5 (T5.1-T5.5) | aplicado (v0.4.0) |
+| C8 | 19/10/2026 | Las notas, individuales: cada una, un documento entero que aparece por la derecha al abrirla. Y en los cuadros de grupos de Inicio se mantienen los iconos | B5 (T5.6-T5.7) | aplicado (v0.4.1) |
 
 ## 1. Objetivo
 
@@ -150,6 +151,9 @@ Falta saber qué es este trabajo: qué lo dispara y qué se hace.
   confirmar).
 - [x] T5.5 Paleta crema y gris cálido en claro y oscuro, con el botón principal en marrón oscuro;
   contraste AA revisado.
+- [x] T5.6 Notas como tarjetas con su texto (y una tarjeta «Nueva nota»); al abrir una, el panel de
+  la derecha se abre en modo documento (`<Peek documento>`, más ancho, con el texto a toda la altura).
+- [x] T5.7 Iconos de vuelta en los títulos de los grupos de Inicio (📌 To do).
 
 ## 6. Guion para explicar cada trabajo
 
