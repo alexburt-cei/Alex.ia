@@ -10,6 +10,7 @@ export const DESCUENTOS: Trabajo = {
   icono: "🏷️",
   descripcion: "Cambiar la fecha de un descuento, o los porcentajes de los cupones y sus fechas.",
   vista: "cards",
+  enlaces: [{ texto: "JS Cupones", url: "https://cei.es/wp-admin/theme-editor.php?file=js%2Ffc_js.js&theme=betheme-child" }],
   proximoCambio: { etiqueta: "Próximo cambio", texto: "Cambio de descuentos" },
   variantes: [
     { id: "fecha", nombre: "Cambiar fecha" },
@@ -43,6 +44,7 @@ export const DESCUENTOS: Trabajo = {
           titulo: "Actualizar los porcentajes de los cupones en WooCommerce",
           como: "Solo los cupones que cambian.",
           importante: "Se suele olvidar",
+          enlace: { texto: "Cupones", url: "https://cei.es/wp-admin/edit.php?post_type=shop_coupon&acfw" },
           variantes: ["porcentajes"],
         },
         {

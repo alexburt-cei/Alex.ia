@@ -44,6 +44,8 @@ export interface Trabajo {
   /** «cards»: un cuadrado por paso que se pone en verde al pulsarlo; «lista»:
    *  una fila por paso con su estado. */
   vista: "cards" | "lista";
+  /** Accesos directos que se enseñan justo antes de la checklist. */
+  enlaces?: { texto: string; url: string }[];
   /** Si tiene el campo para crear el recordatorio del próximo cambio. */
   proximoCambio?: { etiqueta: string; texto: string };
   variantes: Variante[];
