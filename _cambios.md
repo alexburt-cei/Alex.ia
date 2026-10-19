@@ -1,3 +1,10 @@
+# v0.3.2
+
+Alex.ia se abre en **http://localhost:5180** (antes, 5173), para poder tenerla abierta a la vez que
+CEI Import. Lo apuntado en el 5173 se pasa con una copia de seguridad: descargarla allí desde el menú
+··· y restaurarla en el 5180.
+
+
 # v0.3.1
 
 En Tareas, el «Tipo» se elige en un desplegable con sus opciones.

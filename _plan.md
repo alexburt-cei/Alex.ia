@@ -1,5 +1,5 @@
 # Plan 1: Alex.ia, el centro de tareas del trabajo de Alexander
-Revisiones: 5 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
+Revisiones: 6 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
 
 ## 0. Registro de cambios
 
@@ -10,6 +10,7 @@ Revisiones: 5 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` 
 | C3 | 19/10/2026 | Sin enlaces en las cards (bastan los que hay) y sin «cómo comprobarlo»: la revisión es manual. Aprovechar todo el ancho siempre que se pueda: los pasos de las tareas en una sola fila y lo pequeño, en la mitad derecha | B2 (T2.6) | aplicado (v0.2.1) |
 | C4 | 19/10/2026 | Enlace «JS Cupones» (editor del tema, `fc_js.js`) justo antes de la checklist, en un recuadro gris claro con texto gris oscuro; enlace a los cupones de WooCommerce en su paso; las opciones del trabajo, en una sola columna arriba a la derecha, en un cuadro blanco, reutilizable; nunca #FFF ni #000 de fondo de página (gris muy claro y muy oscuro) y sí para cuadros especiales | B2 (T2.7-T2.9) | aplicado (v0.3.0) |
 | C5 | 19/10/2026 | «Tipo», como un desplegable (select) con sus opciones en vez de botones | B2 (T2.10) | aplicado (v0.3.1) |
+| C6 | 19/10/2026 | El 5173 estaba ocupado (CEI Import): la app pasa al puerto 5180. Los datos del 5173 se llevan con una copia de seguridad (descargar en el 5173 y restaurar en el 5180) | D3 | aplicado (v0.3.2) |
 
 ## 1. Objetivo
 
@@ -30,7 +31,7 @@ trabajo se escriben con lo que él explique, nunca inventados.
 |---|----------|--------|
 | D1 | App nueva en el repositorio `Alex.ia`, separada de CEI Import (que sigue siendo el conversor de ficheros) | Respuesta, 15/10 |
 | D2 | La usa solo Alexander, en un ordenador. Los datos se guardan en el navegador (localStorage), sin servidor | Respuesta, 15/10 |
-| D3 | Se abre en local con `npm run dev` (http://localhost:5173, con el puerto fijo para no «perder» los datos) | Respuesta, 15/10 |
+| D3 | Se abre en local con `npm run dev` en http://localhost:5180 (puerto fijo y propio para no «perder» los datos; hasta la v0.3.1 era el 5173, que choca con CEI Import) | Respuestas, 15/10 y 19/10 |
 | D4 | Se llama **Alex.ia** | Respuesta, 15/10 |
 | D5 | Pestañas arriba (no barra lateral), con estilo parecido a Notion: tipografía, tablas, casillas, desplegables y panel lateral. Modo claro y oscuro | Respuestas, 15/10 |
 | D6 | Estados y prioridades en etiquetas de color suave, como las de Notion; el resto, en blanco y grises | Respuesta, 15/10 |
@@ -148,7 +149,7 @@ Para cada trabajo de Tareas:
 ## 7. Cómo verificar
 
 - `npm run build`, `npm run lint` y `npm run verificar`, sin errores.
-- Abrir `npm run dev` en http://localhost:5173: en Inicio y en cada pestaña, crear, editar y cerrar
+- Abrir `npm run dev` en http://localhost:5180: en Inicio y en cada pestaña, crear, editar y cerrar
   elementos, y comprobar que siguen ahí al recargar.
 
 ## 8. Checklist de cierre
