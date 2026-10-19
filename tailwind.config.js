@@ -19,6 +19,7 @@ export default {
         hover: "var(--hover)",
         activo: "var(--activo)",
         acento: "var(--acento)",
+        "sobre-acento": "var(--sobre-acento)",
         "acento-texto": "var(--acento-texto)",
         rojo: "var(--rojo)",
         naranja: "var(--naranja)",

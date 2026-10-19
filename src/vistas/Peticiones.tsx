@@ -116,7 +116,6 @@ export function Peticiones({ abierto }: { abierto: string | null }) {
 
   return (
     <Pagina
-      icono="📨"
       titulo="Peticiones"
       descripcion="Lo que te piden: quién, por dónde, para cuándo y si ya está hecho.">
       <BaseDeDatos
@@ -172,7 +171,7 @@ function PanelPeticion({ p }: { p: Peticion }) {
   const cambiar = (c: Partial<Peticion>) => actualizar("peticiones", p.id, c);
   return (
     <>
-      <TituloPeek icono="📨" valor={p.que} onCambiar={(que) => cambiar({ que })} placeholder="¿Qué te piden?" />
+      <TituloPeek valor={p.que} onCambiar={(que) => cambiar({ que })} placeholder="¿Qué te piden?" />
       <Propiedades>
         <Propiedad icono="persona" nombre="Quién">
           <CampoTexto valor={p.quien} onCambiar={(quien) => cambiar({ quien })} etiqueta="Quién" placeholder="Quién lo pide" />

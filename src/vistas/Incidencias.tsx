@@ -92,7 +92,6 @@ export function Incidencias({ abierto }: { abierto: string | null }) {
 
   return (
     <Pagina
-      icono="🐞"
       titulo="Incidencias"
       descripcion="Problemas que te llegan, hasta que se resuelven, y cómo se resolvieron.">
       <BaseDeDatos
@@ -144,7 +143,7 @@ function PanelIncidencia({ i }: { i: Incidencia }) {
   const cambiar = (c: Partial<Incidencia>) => actualizar("incidencias", i.id, c);
   return (
     <>
-      <TituloPeek icono="🐞" valor={i.titulo} onCambiar={(titulo) => cambiar({ titulo })} placeholder="¿Qué falla?" />
+      <TituloPeek valor={i.titulo} onCambiar={(titulo) => cambiar({ titulo })} placeholder="¿Qué falla?" />
       <Propiedades>
         <Propiedad icono="sistema" nombre="Sistema">
           <Selector opciones={SISTEMAS} valor={i.sistema} onCambiar={(sistema) => cambiar({ sistema })} etiqueta="Sistema" />

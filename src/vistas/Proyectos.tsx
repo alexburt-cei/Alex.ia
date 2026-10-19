@@ -80,7 +80,7 @@ export function Proyectos({ abierto }: { abierto: string | null }) {
   ];
 
   return (
-    <Pagina icono="📁" titulo="Proyectos abiertos" descripcion="Lo que tienes entre manos y su próximo paso.">
+    <Pagina titulo="Proyectos abiertos" descripcion="Lo que tienes entre manos y su próximo paso.">
       <BaseDeDatos
         clave="proyectos"
         elementos={ordenar(datos.proyectos)}
@@ -135,7 +135,7 @@ function PanelProyecto({ p }: { p: Proyecto }) {
   const cambiar = (c: Partial<Proyecto>) => actualizar("proyectos", p.id, c);
   return (
     <>
-      <TituloPeek icono="📁" valor={p.nombre} onCambiar={(nombre) => cambiar({ nombre })} placeholder="Nombre del proyecto" />
+      <TituloPeek valor={p.nombre} onCambiar={(nombre) => cambiar({ nombre })} placeholder="Nombre del proyecto" />
       <Propiedades>
         <Propiedad icono="estado" nombre="Estado">
           <Selector opciones={ESTADOS_PROYECTO} valor={p.estado} onCambiar={(estado) => cambiar({ estado })} etiqueta="Estado" />

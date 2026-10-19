@@ -53,7 +53,7 @@ export function Notas({ abierto }: { abierto: string | null }) {
   ];
 
   return (
-    <Pagina icono="📝" titulo="Notas" descripcion="Apuntes sueltos que no son tarea ni proyecto.">
+    <Pagina titulo="Notas" descripcion="Apuntes sueltos que no son tarea ni proyecto.">
       <BaseDeDatos
         clave="notas"
         elementos={[...datos.notas].sort((a, b) => b.editado.localeCompare(a.editado))}
@@ -76,7 +76,6 @@ export function Notas({ abierto }: { abierto: string | null }) {
           textoEliminar={`¿Eliminar la nota «${actual.titulo || "sin título"}»?`}
         >
           <TituloPeek
-            icono="📝"
             valor={actual.titulo}
             onCambiar={(titulo) => actualizar("notas", actual.id, { titulo })}
             placeholder="Título"

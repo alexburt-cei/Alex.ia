@@ -33,7 +33,6 @@ export function Tareas({ trabajo }: { trabajo: string | null }) {
   const t = trabajoPorId(trabajo) ?? TRABAJOS[0];
   return (
     <Pagina
-      icono="✅"
       titulo="Tareas"
       descripcion="Tus trabajos de siempre, paso a paso. Al acabar, «Terminar» guarda la lista en «Última vez» y la deja vacía para la próxima."
       lateral={<PanelTrabajo key={t.id} t={t} />}
@@ -84,10 +83,7 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
 
   return (
     <div className="pt-7">
-      <h2 className="flex items-center gap-2.5 text-2xl font-semibold">
-        <span aria-hidden="true">{t.icono}</span>
-        {t.nombre}
-      </h2>
+      <h2 className="text-2xl font-semibold">{t.nombre}</h2>
       {t.descripcion && <p className="mt-1 text-[15px] text-tinta-2">{t.descripcion}</p>}
 
       {t.enlaces && t.enlaces.length > 0 && (

@@ -101,7 +101,6 @@ export function Recordatorios({ abierto }: { abierto: string | null }) {
 
   return (
     <Pagina
-      icono="⏰"
       titulo="Recordatorios"
       descripcion="Salen en Inicio el día que tocan, y en rojo si se pasan.">
       <BaseDeDatos
@@ -166,7 +165,7 @@ function PanelRecordatorio({ r, hoy }: { r: Recordatorio; hoy: string }) {
 
   return (
     <>
-      <TituloPeek icono="⏰" valor={r.texto} onCambiar={(texto) => cambiar({ texto })} placeholder="¿Qué tienes que recordar?" />
+      <TituloPeek valor={r.texto} onCambiar={(texto) => cambiar({ texto })} placeholder="¿Qué tienes que recordar?" />
       <Propiedades>
         <Propiedad icono="fecha" nombre="Fecha">
           <CampoFecha valor={r.fecha} onCambiar={(f) => cambiar(reprogramar(f))} etiqueta="Fecha" obligatoria />

@@ -50,7 +50,7 @@ export function Casilla({
 type TipoBoton = "primario" | "suave" | "borde";
 
 const CLASES_BOTON: Record<TipoBoton, string> = {
-  primario: "bg-acento text-white hover:brightness-110 disabled:opacity-40 disabled:hover:brightness-100",
+  primario: "bg-acento text-sobre-acento hover:brightness-110 disabled:opacity-40 disabled:hover:brightness-100",
   suave: "text-tinta-2 hover:bg-hover hover:text-tinta disabled:opacity-40",
   borde: "border border-linea text-tinta hover:bg-hover disabled:opacity-40",
 };
@@ -167,7 +167,7 @@ export function Pestanas<V extends string>({
             {o.icono}
             {o.texto}
             {o.cuenta !== undefined && o.cuenta > 0 && (
-              <span className="rounded-full bg-[#c4403b] px-1.5 text-[11px] font-semibold leading-4 text-white">
+              <span className="rounded-full bg-[#b23a35] px-1.5 text-[11px] font-semibold leading-4 text-white">
                 {o.cuenta}
               </span>
             )}

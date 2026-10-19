@@ -49,21 +49,16 @@ export function Peek({
 
 /** El título grande del elemento, editable. */
 export function TituloPeek({
-  icono,
   valor,
   onCambiar,
   placeholder,
 }: {
-  icono: string;
   valor: string;
   onCambiar: (v: string) => void;
   placeholder: string;
 }) {
   return (
     <div className="pt-6">
-      <div className="text-4xl leading-none" aria-hidden="true">
-        {icono}
-      </div>
       <textarea
         value={valor}
         rows={1}
@@ -76,7 +71,7 @@ export function TituloPeek({
           el.style.height = "auto";
           el.style.height = `${el.scrollHeight}px`;
         }}
-        className="mt-3 block w-full resize-none bg-transparent text-[30px] font-bold leading-tight outline-none placeholder:text-tinta-3"
+        className="block w-full resize-none bg-transparent text-[30px] font-bold leading-tight outline-none placeholder:text-tinta-3"
       />
     </div>
   );

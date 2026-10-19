@@ -1,16 +1,14 @@
 import type { ReactNode } from "react";
 
-/** Una página: icono y título grandes y su contenido, como en Notion. Con
+/** Una página: título grande y su contenido, como en Notion. Con
  *  `lateral`, una columna arriba a la derecha en un cuadro blanco (opciones de
  *  la página), y el contenido ocupa el resto del ancho. */
 export function Pagina({
-  icono,
   titulo,
   descripcion,
   lateral,
   children,
 }: {
-  icono: string;
   titulo: string;
   descripcion?: ReactNode;
   lateral?: ReactNode;
@@ -18,10 +16,7 @@ export function Pagina({
 }) {
   const cabecera = (
     <header className="pb-5 pt-10">
-      <div className="text-5xl leading-none" aria-hidden="true">
-        {icono}
-      </div>
-      <h1 className="mt-4 text-[34px] font-bold leading-tight tracking-tight">{titulo}</h1>
+      <h1 className="text-[34px] font-bold leading-tight tracking-tight">{titulo}</h1>
       {descripcion && <p className="mt-1.5 text-[15px] text-tinta-2">{descripcion}</p>}
     </header>
   );
