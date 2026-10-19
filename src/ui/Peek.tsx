@@ -10,12 +10,15 @@ export function Peek({
   onCerrar,
   onEliminar,
   textoEliminar,
+  documento = false,
   children,
 }: {
   onCerrar: () => void;
   onEliminar: () => void;
   /** Pregunta antes de eliminar, p. ej. «¿Eliminar este proyecto?». */
   textoEliminar: string;
+  /** Más ancho, para leer y escribir un documento (las notas). */
+  documento?: boolean;
   children: ReactNode;
 }) {
   useEffect(() => {
@@ -29,7 +32,7 @@ export function Peek({
   return createPortal(
     <aside
       aria-label="Detalle"
-      className="desplazable fixed inset-y-0 right-0 z-40 w-full overflow-y-auto bg-caja shadow-peek sm:w-[580px]"
+      className={`desplazable fixed inset-y-0 right-0 z-40 flex w-full flex-col overflow-y-auto bg-caja shadow-peek ${documento ? "sm:w-[min(900px,75vw)]" : "sm:w-[580px]"}`}
     >
       <div className="sticky top-0 z-10 flex h-11 items-center justify-between bg-caja px-2">
         <Boton icono="cerrar" title="Cerrar (Esc)" onClick={onCerrar} />
@@ -41,7 +44,7 @@ export function Peek({
           }}
         />
       </div>
-      <div className="px-6 pb-20 sm:px-12">{children}</div>
+      <div className="flex flex-1 flex-col px-6 pb-20 sm:px-12">{children}</div>
     </aside>,
     document.body,
   );

@@ -67,7 +67,7 @@ export function Inicio() {
       <div className="grid gap-4 lg:grid-cols-2 2xl:grid-cols-3">
         <GrupoTodo />
 
-        <Bloque titulo="Tareas"
+        <Bloque icono="✅" titulo="Tareas"
           pills={
             <>
               <Etiqueta color="default">{plural(enMarcha, "en marcha", "en marcha")}</Etiqueta>
@@ -106,7 +106,7 @@ export function Inicio() {
         </Bloque>
 
         <Bloque
-          titulo="Recordatorios"
+          icono="⏰" titulo="Recordatorios"
           pills={
             <>
               <Etiqueta color="default">{plural(recordatorios.length, "para hoy", "para hoy")}</Etiqueta>
@@ -150,7 +150,7 @@ export function Inicio() {
           <AnadirRecordatorio hoy={hoy} />
         </Bloque>
 
-        <Bloque titulo="Proyectos abiertos"
+        <Bloque icono="📁" titulo="Proyectos abiertos"
           pills={
             <>
               <Etiqueta color="default">{plural(proyectos.length, "abierto", "abiertos")}</Etiqueta>
@@ -178,7 +178,7 @@ export function Inicio() {
           <Mas total={proyectos.length} pagina="proyectos" />
         </Bloque>
 
-        <Bloque titulo="Peticiones"
+        <Bloque icono="📨" titulo="Peticiones"
           pills={
             <>
               <Etiqueta color="default">{plural(peticiones.length, "pendiente", "pendientes")}</Etiqueta>
@@ -204,7 +204,7 @@ export function Inicio() {
           <Mas total={peticiones.length} pagina="peticiones" />
         </Bloque>
 
-        <Bloque titulo="Notas"
+        <Bloque icono="📝" titulo="Notas"
           pills={<Etiqueta color="default">{plural(datos.notas.length, "nota", "notas")}</Etiqueta>} pagina="notas">
           {notas.length === 0 && <Vacio>Aún no hay notas.</Vacio>}
           {notas.map((n) => (
@@ -215,7 +215,7 @@ export function Inicio() {
             </Fila>
           ))}
         </Bloque>
-        <Bloque titulo="Incidencias"
+        <Bloque icono="🐞" titulo="Incidencias"
           pills={<Etiqueta color="default">{plural(incidencias.length, "abierta", "abiertas")}</Etiqueta>} pagina="incidencias">
           {incidencias.length === 0 && <Vacio>No hay incidencias abiertas.</Vacio>}
           {incidencias.slice(0, MAX_FILAS).map((i) => {
@@ -240,6 +240,7 @@ export function Inicio() {
 /** Un grupo de Inicio: su cuadro, su título con sus cifras en pills y lo
  *  que hay que mirar. */
 function Bloque({
+  icono,
   titulo,
   subtitulo,
   pills,
@@ -247,6 +248,7 @@ function Bloque({
   pie,
   children,
 }: {
+  icono: string;
   titulo: string;
   subtitulo?: string;
   pills?: ReactNode;
@@ -258,7 +260,10 @@ function Bloque({
     <section aria-label={titulo} className="rounded-lg border border-linea bg-fondo-2 p-4">
       <header className="flex items-start justify-between gap-2 border-b border-linea pb-2">
         <div className="flex min-w-0 flex-wrap items-center gap-2">
-          <h2 className="text-lg font-semibold">{titulo}</h2>
+          <h2 className="flex items-center gap-2 text-lg font-semibold">
+            <span aria-hidden="true">{icono}</span>
+            {titulo}
+          </h2>
           {subtitulo && <span className="text-sm text-tinta-2">· {subtitulo}</span>}
           {pills}
         </div>
@@ -349,7 +354,10 @@ function GrupoTodo() {
     <section aria-label="To do" className="rounded-lg border border-linea bg-fondo-2 p-4">
       <header className="flex items-start justify-between gap-2 border-b border-linea pb-2">
         <div className="flex min-w-0 flex-wrap items-center gap-2">
-          <h2 className="text-lg font-semibold">To do</h2>
+          <h2 className="flex items-center gap-2 text-lg font-semibold">
+            <span aria-hidden="true">📌</span>
+            To do
+          </h2>
           <Etiqueta color="default">{plural(pendientes.length, "pendiente", "pendientes")}</Etiqueta>
         </div>
         {hechos.length > 0 && (
