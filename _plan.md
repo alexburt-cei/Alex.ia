@@ -1,5 +1,5 @@
 # Plan 1: Alex.ia, el centro de tareas del trabajo de Alexander
-Revisiones: 9 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
+Revisiones: 10 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
 
 ## 0. Registro de cambios
 
@@ -14,6 +14,7 @@ Revisiones: 9 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` 
 | C7 | 19/10/2026 | Sin iconos grandes en los títulos; modo claro por defecto; en Inicio, los grupos en orden Tareas, Recordatorios, Proyectos abiertos, Peticiones, Notas e Incidencias, cada uno en su cuadro (no blanco), sin la fila de cifras (pasan a pills en cada grupo); tonos crema, beige y grises en toda la app. Después: un grupo nuevo «To do», siempre el primero | B5 (T5.1-T5.5) | aplicado (v0.4.0) |
 | C8 | 19/10/2026 | Las notas, individuales: cada una, un documento entero que aparece por la derecha al abrirla. Y en los cuadros de grupos de Inicio se mantienen los iconos | B5 (T5.6-T5.7) | aplicado (v0.4.1) |
 | C9 | 19/10/2026 | Las pestañas de arriba, sin iconos, en la barra superior junto al logo, centradas y con estilo de menú web; la tipografía Inter en toda la app | B5 (T5.8-T5.9) | aplicado (v0.5.0) |
+| C10 | 19/10/2026 | Más redondeo en las cards en general | B5 (T5.10) | aplicado (v0.5.1) |
 
 ## 1. Objetivo
 
@@ -161,6 +162,8 @@ Falta saber qué es este trabajo: qué lo dispara y qué se hace.
   abierta, en una pastilla) y acciones a la derecha. En pantallas estrechas, el menú baja a una fila.
 - [x] T5.9 Inter (Google Fonts, pesos 400-700) como tipografía de toda la app; sin conexión, la del
   sistema.
+- [x] T5.10 Esquinas más redondeadas: 16 px en cuadros y cards grandes (Inicio, pasos, notas,
+  opciones, columnas del tablero); 12 px en tarjetas del tablero, avisos y menús.
 
 ## 6. Guion para explicar cada trabajo
 

@@ -1,3 +1,8 @@
+# v0.5.1
+
+Las cards y los cuadros tienen las esquinas más redondeadas.
+
+
 # v0.5.0
 
 El menú pasa a la barra de arriba, junto al logo: centrado, sin iconos y con la página abierta
