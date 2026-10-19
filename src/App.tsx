@@ -6,7 +6,7 @@ import { cambiarDatos, leerDatos, limpiarVacios, useDatos, useErrorGuardado } fr
 import { PAGINAS, ir, useRuta, type Ruta } from "./estado/navegacion.ts";
 import { useAhora } from "./estado/reloj.ts";
 import { APP_VERSION } from "./version.ts";
-import { Boton, Pestanas } from "./ui/basicos.tsx";
+import { Boton } from "./ui/basicos.tsx";
 import { Flotante } from "./ui/Flotante.tsx";
 import { Icono } from "./ui/Icono.tsx";
 import { Incidencias } from "./vistas/Incidencias.tsx";
@@ -68,12 +68,19 @@ function BarraSuperior({ ruta }: { ruta: Ruta }) {
   const hoy = diaDe(useAhora());
   const paraHoy = pendientesHoy(datos.recordatorios, hoy).length;
 
+  const elegir = (p: Ruta["pagina"]) => {
+    // En Tareas, volver a pulsar la pestaña no cambia de trabajo.
+    if (!(p === "tareas" && ruta.pagina === "tareas")) ir(p);
+  };
+
+  // Una sola barra: el logo a la izquierda, el menú en el centro y las
+  // acciones a la derecha. En pantallas estrechas, el menú baja a una fila.
   return (
     <header className="sticky top-0 z-30 border-b border-linea bg-fondo">
-      <div className="mx-auto flex items-center justify-between px-3 pt-2 sm:px-11">
+      <div className="grid grid-cols-[1fr_auto] items-center gap-x-4 px-3 py-2 sm:px-11 lg:grid-cols-[1fr_auto_1fr]">
         <a
           href="#/inicio"
-          className="flex items-center gap-2 rounded px-1.5 py-1 text-[15px] font-semibold hover:bg-hover"
+          className="col-start-1 row-start-1 flex items-center gap-2 justify-self-start rounded px-1.5 py-1 text-[15px] font-semibold hover:bg-hover"
         >
           <span
             aria-hidden="true"
@@ -83,27 +90,41 @@ function BarraSuperior({ ruta }: { ruta: Ruta }) {
           </span>
           Alex.ia
         </a>
-        <div className="flex items-center gap-0.5">
+        <nav
+          aria-label="Menú"
+          className="sin-barra col-span-2 col-start-1 row-start-2 -mx-1 flex items-center gap-1 overflow-x-auto pt-1 lg:col-span-1 lg:col-start-2 lg:row-start-1 lg:mx-0 lg:justify-center lg:pt-0"
+        >
+          {PAGINAS.map((p) => {
+            const activa = p.id === ruta.pagina;
+            const cuenta = p.id === "recordatorios" ? paraHoy : 0;
+            return (
+              <a
+                key={p.id}
+                href={`#/${p.id}`}
+                aria-current={activa ? "page" : undefined}
+                onClick={(e) => {
+                  e.preventDefault();
+                  elegir(p.id);
+                }}
+                className={`flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-[14px] transition-colors ${
+                  activa ? "bg-fondo-2 font-semibold text-tinta" : "text-tinta-2 hover:bg-hover hover:text-tinta"
+                }`}
+              >
+                {p.nombre}
+                {cuenta > 0 && (
+                  <span className="rounded-full bg-[#b23a35] px-1.5 text-[11px] font-semibold leading-4 text-white">
+                    {cuenta}
+                  </span>
+                )}
+              </a>
+            );
+          })}
+        </nav>
+        <div className="col-start-2 row-start-1 flex items-center gap-0.5 justify-self-end lg:col-start-3">
           <BotonTema />
           <MenuMas />
         </div>
       </div>
-      <nav aria-label="Pestañas" className="mx-auto px-2 pt-1 sm:px-10">
-        <Pestanas
-          etiqueta="Pestañas"
-          valor={ruta.pagina}
-          onCambiar={(p) => {
-            // En Tareas, volver a pulsar la pestaña no cambia de trabajo.
-            if (!(p === "tareas" && ruta.pagina === "tareas")) ir(p);
-          }}
-          opciones={PAGINAS.map((p) => ({
-            valor: p.id,
-            texto: p.nombre,
-            icono: <span aria-hidden="true">{p.icono}</span>,
-            cuenta: p.id === "recordatorios" ? paraHoy : undefined,
-          }))}
-        />
-      </nav>
     </header>
   );
 }
