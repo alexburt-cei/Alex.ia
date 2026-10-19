@@ -1,3 +1,11 @@
+# v0.3.0
+
+En Tareas, las opciones de cada trabajo (Tipo, Próximo cambio, Empezada, Notas y las peticiones) van en
+una columna arriba a la derecha, en un cuadro blanco. Justo antes de la checklist de Cambio de
+descuentos hay un acceso a «JS Cupones», y la card de WooCommerce enlaza a los cupones. El fondo de la
+app pasa a gris muy claro (o muy oscuro); el blanco y el negro puros quedan para los cuadros.
+
+
 # v0.2.1
 
 La app aprovecha todo el ancho de la pantalla. En Tareas, los pasos van en una sola fila; Tipo y

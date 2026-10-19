@@ -53,3 +53,6 @@ para que les dé el visto bueno.
 - **Los datos guardados no se rompen**: un campo nuevo necesita su valor por defecto en
   `src/lib/datos.ts` (los `nuevo…()`), que es lo que completa los datos antiguos al leerlos.
 - Colores solo con las variables de `src/index.css` (claro y oscuro), con contraste AA en los textos.
+  **Nunca `#fff` ni `#000` de fondo de página** (`--fondo`, gris muy claro o muy oscuro); el blanco y
+  el negro puros (`--caja`, `bg-caja`) son para cuadros especiales.
+- Las opciones de una página van en la columna de arriba a la derecha (`<Pagina lateral={…}>`).

@@ -1,5 +1,5 @@
 # Plan 1: Alex.ia, el centro de tareas del trabajo de Alexander
-Revisiones: 3 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
+Revisiones: 4 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
 
 ## 0. Registro de cambios
 
@@ -8,6 +8,7 @@ Revisiones: 3 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` 
 | C1 | 15/10/2026 | Centralizar todas las tareas del trabajo, con los pasos de cada una para saber que se hacen bien y no olvidar nada: cada trabajo en una pestaña, con checklists y selectores de estado. Después: un mini dashboard inicial que no se llame «Resumen» y que recoja todas las pestañas («Tareas», «Proyectos abiertos», «Recordatorios»…), y una interfaz parecida a Notion. Respuestas: las de D1-D17 | B1 (T1.1-T1.8), B2-B4 | B1 aplicado (v0.1.0) |
 | C2 | 16/10/2026 | Cambio de descuentos: quitar «A qué se refiere»; con «Cambiar fecha», aplazar la fecha de validez de los cupones en cei.es/informacion-becas-descuentos y actualizar la fecha de validez de los descuentos en todos los Productos de Zoho CRM; con «Cambiar porcentajes y fechas», cambiar fechas y porcentajes de la primera convocatoria en esa página, los porcentajes de los cupones en WooCommerce (se suele olvidar), la fecha de validez en los Productos de Zoho CRM y los porcentajes de la próxima convocatoria en CEI Pricing; guardar desde la tarea el recordatorio del próximo cambio; los pasos, como cards cuadradas que se ponen en verde, y «Terminar» solo con todas. Respuestas: las de D19-D23 | B2 (T2.1-T2.5) | aplicado (v0.2.0) |
 | C3 | 19/10/2026 | Sin enlaces en las cards (bastan los que hay) y sin «cómo comprobarlo»: la revisión es manual. Aprovechar todo el ancho siempre que se pueda: los pasos de las tareas en una sola fila y lo pequeño, en la mitad derecha | B2 (T2.6) | aplicado (v0.2.1) |
+| C4 | 19/10/2026 | Enlace «JS Cupones» (editor del tema, `fc_js.js`) justo antes de la checklist, en un recuadro gris claro con texto gris oscuro; enlace a los cupones de WooCommerce en su paso; las opciones del trabajo, en una sola columna arriba a la derecha, en un cuadro blanco, reutilizable; nunca #FFF ni #000 de fondo de página (gris muy claro y muy oscuro) y sí para cuadros especiales | B2 (T2.7-T2.9) | aplicado (v0.3.0) |
 
 ## 1. Objetivo
 
@@ -50,6 +51,8 @@ trabajo se escriben con lo que él explique, nunca inventados.
 | D23 | En Descuentos, «Próximo cambio»: una fecha y «Crear recordatorio», que crea «Cambio de descuentos» para ese día enlazado a la tarea | Respuesta, 16/10 |
 | D24 | Sin más enlaces en las cards ni «cómo comprobarlo»: la revisión es manual | Respuesta, 19/10 |
 | D25 | Aprovechar todo el ancho de la pantalla siempre que se pueda | Mensaje, 19/10 |
+| D26 | Nunca blanco ni negro puros de fondo de página; sí en cuadros especiales | Mensaje, 19/10 |
+| D27 | Las opciones de una página, en una columna arriba a la derecha en un cuadro blanco | Mensaje, 19/10 |
 | D18 | Se trabaja siempre en la rama `main`, que Alexander actualiza en su ordenador con `git pull` | Respuesta, 16/10 |
 
 ## 3. Decisiones por defecto (pendientes del visto bueno de Alexander)
@@ -111,6 +114,13 @@ Las tomé para no parar la primera versión. Cada una se cambia sin tocar los da
   en dos en pantallas estrechas) y de 240 px de alto en vez de cuadradas, para que no crezcan sin
   medida; en Tareas, Tipo y Próximo cambio a la izquierda y Empezada, Notas y peticiones a la derecha;
   «Terminar» y «Última vez», lado a lado; Inicio, en tres columnas en pantallas muy anchas.
+- [x] T2.7 `Trabajo.enlaces` (accesos antes de la checklist): «JS Cupones» en Descuentos; y el
+  enlace «Cupones» en la card de WooCommerce.
+- [x] T2.8 `Pagina` con `lateral`: un cuadro blanco arriba a la derecha (fijo al desplazar). En Tareas
+  lleva Tipo, Próximo cambio, Empezada, Notas y las peticiones del trabajo, una debajo de otra.
+- [x] T2.9 Fondos: página en gris muy claro (#f7f7f5) o muy oscuro (#191919); `--caja` (#fff / #000)
+  para el cuadro de opciones, el panel lateral, los menús y las tarjetas. Contraste AA revisado con
+  los fondos nuevos.
 
 ### Bloque B3 — Pasos de «Importar al CRM» *(pendiente; ya sale con cards, D19)*
 
