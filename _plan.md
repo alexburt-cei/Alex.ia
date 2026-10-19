@@ -1,5 +1,5 @@
 # Plan 1: Alex.ia, el centro de tareas del trabajo de Alexander
-Revisiones: 10 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
+Revisiones: 11 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
 
 ## 0. Registro de cambios
 
@@ -15,6 +15,7 @@ Revisiones: 10 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main`
 | C8 | 19/10/2026 | Las notas, individuales: cada una, un documento entero que aparece por la derecha al abrirla. Y en los cuadros de grupos de Inicio se mantienen los iconos | B5 (T5.6-T5.7) | aplicado (v0.4.1) |
 | C9 | 19/10/2026 | Las pestañas de arriba, sin iconos, en la barra superior junto al logo, centradas y con estilo de menú web; la tipografía Inter en toda la app | B5 (T5.8-T5.9) | aplicado (v0.5.0) |
 | C10 | 19/10/2026 | Más redondeo en las cards en general | B5 (T5.10) | aplicado (v0.5.1) |
+| C11 | 19/10/2026 | En Inicio, Recordatorios con todos los creados y su fecha, no solo los de hoy; «To do» también en el menú de arriba | B5 (T5.11-T5.12) | aplicado (v0.5.2) |
 
 ## 1. Objetivo
 
@@ -84,7 +85,7 @@ Las tomé para no parar la primera versión. Cada una se cambia sin tocar los da
 | P10 | En Inicio se puede añadir un recordatorio para hoy escribiéndolo y pulsando Intro |
 | P11 | Al marcar un paso como Problema o Bloqueado, el cursor salta a su nota |
 | P12 | «Terminar» pregunta antes; si quedan pasos sin «Hecho», lo avisa |
-| P13 | «To do» vive solo en Inicio (sin pestaña propia ni fechas); lo hecho queda tachado hasta «Limpiar hechos» |
+| P13 | «To do» sin fechas; lo hecho queda tachado hasta «Limpiar hechos» (con pestaña propia desde C11) |
 
 ## 4. Fuera de alcance (de momento)
 
@@ -164,6 +165,10 @@ Falta saber qué es este trabajo: qué lo dispara y qué se hace.
   sistema.
 - [x] T5.10 Esquinas más redondeadas: 16 px en cuadros y cards grandes (Inicio, pasos, notas,
   opciones, columnas del tablero); 12 px en tarjetas del tablero, avisos y menús.
+- [x] T5.11 Inicio, Recordatorios: todos los pendientes por fecha (`pendientesPorFecha()`), con pills
+  de pendientes, para hoy y atrasados.
+- [x] T5.12 Pestaña «To do» (después de Inicio), con la misma lista que el grupo de Inicio
+  (`src/vistas/Todo.tsx`).
 
 ## 6. Guion para explicar cada trabajo
 

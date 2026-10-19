@@ -4,7 +4,7 @@
 
 **Alex.ia**: el centro de tareas del trabajo de Alexander. App web (React + Vite + TypeScript +
 Tailwind) que se usa en local, con los datos guardados en el navegador (localStorage), sin servidor.
-Pestañas: Inicio (mini dashboard) · Tareas (trabajos con checklist) · Proyectos abiertos ·
+Pestañas: Inicio (mini dashboard) · To do · Tareas (trabajos con checklist) · Proyectos abiertos ·
 Recordatorios · Incidencias · Peticiones · Notas. Estilo parecido a Notion.
 
 El plan vivo, con las decisiones y lo pendiente, está en `_plan.md`.

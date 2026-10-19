@@ -1,3 +1,9 @@
+# v0.5.2
+
+En Inicio, Recordatorios enseña todos los pendientes con su fecha (no solo los de hoy), primero los
+atrasados. Y «To do» tiene su pestaña en el menú, justo después de Inicio.
+
+
 # v0.5.1
 
 Las cards y los cuadros tienen las esquinas más redondeadas.
