@@ -175,8 +175,18 @@ export interface Nota extends Base {
   texto: string;
 }
 
+/** Una cosa por hacer, suelta, del grupo «To do» de Inicio. */
+export interface Todo {
+  id: string;
+  texto: string;
+  hecho: boolean;
+  creado: string;
+  hechoEl: string | null;
+}
+
 export interface Datos {
   version: 1;
+  todos: Todo[];
   trabajos: Record<string, EstadoTrabajo>;
   proyectos: Proyecto[];
   recordatorios: Recordatorio[];

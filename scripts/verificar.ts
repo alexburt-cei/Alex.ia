@@ -216,6 +216,7 @@ prueba("lectura tolerante de datos antiguos o incompletos", () => {
     recordatorios: [{ id: "r1", texto: "Llamar", fecha: "2026-10-20" }],
     trabajos: { descuentos: { actual: { referencia: "X" } } },
   });
+  assert.deepEqual(d.todos, []);
   assert.equal(d.proyectos.length, 1);
   assert.equal(d.proyectos[0].estado, "abierto");
   assert.deepEqual(d.proyectos[0].hitos, []);

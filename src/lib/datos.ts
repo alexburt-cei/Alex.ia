@@ -13,6 +13,7 @@ import type {
   Peticion,
   Proyecto,
   Recordatorio,
+  Todo,
 } from "./tipos.ts";
 
 export function nuevoId(): string {
@@ -24,6 +25,7 @@ export function nuevoId(): string {
 export function datosVacios(): Datos {
   return {
     version: 1,
+    todos: [],
     trabajos: {},
     proyectos: [],
     recordatorios: [],
@@ -99,6 +101,10 @@ export function nuevaPeticion(ahora: string, datos: Partial<Peticion> = {}): Pet
   };
 }
 
+export function nuevoTodo(ahora: string, datos: Partial<Todo> = {}): Todo {
+  return { id: nuevoId(), texto: "", hecho: false, creado: ahora, hechoEl: null, ...datos };
+}
+
 export function nuevaNota(ahora: string, datos: Partial<Nota> = {}): Nota {
   return { ...base(ahora), titulo: "", texto: "", ...datos };
 }
@@ -166,6 +172,7 @@ export function normalizar(x: unknown): Datos {
   const hoy = "1970-01-01";
   return {
     version: 1,
+    todos: lista(x.todos, (o) => nuevoTodo(ahora, o as Partial<Todo>)),
     trabajos: trabajos(x.trabajos),
     proyectos: lista(x.proyectos, (o) => {
       const p = nuevoProyecto(ahora, o as Partial<Proyecto>);

@@ -5,7 +5,7 @@
 import { useSyncExternalStore } from "react";
 import { estadoTrabajoVacio } from "../lib/checklist.ts";
 import { datosVacios, estaVacio, normalizar } from "../lib/datos.ts";
-import type { Coleccion, Datos, EstadoTrabajo } from "../lib/tipos.ts";
+import type { Coleccion, Datos, EstadoTrabajo, Todo } from "../lib/tipos.ts";
 
 export const CLAVE_DATOS = "alexia.datos";
 
@@ -136,4 +136,22 @@ export function limpiarVacios(abierto: string | null) {
     }
     return cambiado ? res : d;
   });
+}
+
+// --- To do -----------------------------------------------------------------
+
+export function crearTodo(t: Todo) {
+  cambiarDatos((d) => ({ ...d, todos: [...d.todos, t] }));
+}
+
+export function cambiarTodo(id: string, c: Partial<Todo>) {
+  cambiarDatos((d) => ({ ...d, todos: d.todos.map((t) => (t.id === id ? { ...t, ...c } : t)) }));
+}
+
+export function eliminarTodo(id: string) {
+  cambiarDatos((d) => ({ ...d, todos: d.todos.filter((t) => t.id !== id) }));
+}
+
+export function limpiarTodosHechos() {
+  cambiarDatos((d) => ({ ...d, todos: d.todos.filter((t) => !t.hecho) }));
 }
