@@ -1,3 +1,10 @@
+# v0.2.1
+
+La app aprovecha todo el ancho de la pantalla. En Tareas, los pasos van en una sola fila; Tipo y
+Próximo cambio quedan a la izquierda, y Empezada, Notas y las peticiones, a la derecha; «Terminar» y
+«Última vez» van lado a lado. Inicio pasa a tres columnas en pantallas muy anchas.
+
+
 # v0.2.0
 
 Cambio de descuentos ya tiene sus pasos, como cards cuadradas: al pulsar una se pone en verde; la

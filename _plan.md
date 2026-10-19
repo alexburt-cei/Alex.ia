@@ -1,5 +1,5 @@
 # Plan 1: Alex.ia, el centro de tareas del trabajo de Alexander
-Revisiones: 2 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
+Revisiones: 3 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
 
 ## 0. Registro de cambios
 
@@ -7,6 +7,7 @@ Revisiones: 2 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` 
 |---|-------|----------------------|------------------|--------|
 | C1 | 15/10/2026 | Centralizar todas las tareas del trabajo, con los pasos de cada una para saber que se hacen bien y no olvidar nada: cada trabajo en una pestaña, con checklists y selectores de estado. Después: un mini dashboard inicial que no se llame «Resumen» y que recoja todas las pestañas («Tareas», «Proyectos abiertos», «Recordatorios»…), y una interfaz parecida a Notion. Respuestas: las de D1-D17 | B1 (T1.1-T1.8), B2-B4 | B1 aplicado (v0.1.0) |
 | C2 | 16/10/2026 | Cambio de descuentos: quitar «A qué se refiere»; con «Cambiar fecha», aplazar la fecha de validez de los cupones en cei.es/informacion-becas-descuentos y actualizar la fecha de validez de los descuentos en todos los Productos de Zoho CRM; con «Cambiar porcentajes y fechas», cambiar fechas y porcentajes de la primera convocatoria en esa página, los porcentajes de los cupones en WooCommerce (se suele olvidar), la fecha de validez en los Productos de Zoho CRM y los porcentajes de la próxima convocatoria en CEI Pricing; guardar desde la tarea el recordatorio del próximo cambio; los pasos, como cards cuadradas que se ponen en verde, y «Terminar» solo con todas. Respuestas: las de D19-D23 | B2 (T2.1-T2.5) | aplicado (v0.2.0) |
+| C3 | 19/10/2026 | Sin enlaces en las cards (bastan los que hay) y sin «cómo comprobarlo»: la revisión es manual. Aprovechar todo el ancho siempre que se pueda: los pasos de las tareas en una sola fila y lo pequeño, en la mitad derecha | B2 (T2.6) | aplicado (v0.2.1) |
 
 ## 1. Objetivo
 
@@ -47,6 +48,8 @@ trabajo se escriben con lo que él explique, nunca inventados.
 | D21 | «Terminar» se activa solo cuando todas las cards están en verde | Mensaje, 16/10 |
 | D22 | Sin «A qué se refiere» en ningún trabajo | Respuesta, 16/10 |
 | D23 | En Descuentos, «Próximo cambio»: una fecha y «Crear recordatorio», que crea «Cambio de descuentos» para ese día enlazado a la tarea | Respuesta, 16/10 |
+| D24 | Sin más enlaces en las cards ni «cómo comprobarlo»: la revisión es manual | Respuesta, 19/10 |
+| D25 | Aprovechar todo el ancho de la pantalla siempre que se pueda | Mensaje, 19/10 |
 | D18 | Se trabaja siempre en la rama `main`, que Alexander actualiza en su ordenador con `git pull` | Respuesta, 16/10 |
 
 ## 3. Decisiones por defecto (pendientes del visto bueno de Alexander)
@@ -104,8 +107,10 @@ Las tomé para no parar la primera versión. Cada una se cambia sin tocar los da
 - [x] T2.5 Comprobaciones: 15 reglas; recorrido en el navegador (marcar, problema con nota, Terminar
   solo con todo, recordatorio) sin errores.
 
-Pendiente de Alexander: los enlaces de los cupones de WooCommerce, de los Productos de Zoho CRM y de
-CEI Pricing, para ponerlos en sus cards; y, si quiere, cómo sabe que cada paso ha salido bien.
+- [x] T2.6 Todo el ancho (C3): sin tope de ancho en las páginas; las cards, en una sola fila (de dos
+  en dos en pantallas estrechas) y de 240 px de alto en vez de cuadradas, para que no crezcan sin
+  medida; en Tareas, Tipo y Próximo cambio a la izquierda y Empezada, Notas y peticiones a la derecha;
+  «Terminar» y «Última vez», lado a lado; Inicio, en tres columnas en pantallas muy anchas.
 
 ### Bloque B3 — Pasos de «Importar al CRM» *(pendiente; ya sale con cards, D19)*
 
