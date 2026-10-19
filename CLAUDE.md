@@ -21,7 +21,7 @@ para que les dé el visto bueno.
 ## Comandos
 
 - `npm install`
-- `npm run dev`: abre la app en http://localhost:5173 (puerto fijo: los datos van ligados a esa
+- `npm run dev`: abre la app en http://localhost:5180 (puerto fijo: los datos van ligados a esa
   dirección)
 - `npm run build` (= `tsc -b && vite build`)
 - `npm run lint`

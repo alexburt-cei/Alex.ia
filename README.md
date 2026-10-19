@@ -15,13 +15,13 @@ npm install
 npm run dev
 ```
 
-Y abrir **http://localhost:5173** en el navegador. Para cerrarla, `Ctrl + C` en la terminal.
+Y abrir **http://localhost:5180** en el navegador. Para cerrarla, `Ctrl + C` en la terminal.
 
 ## Dónde se guardan los datos
 
-En el propio navegador, solo en ese ordenador y en esa dirección (`http://localhost:5173`). Por eso:
+En el propio navegador, solo en ese ordenador y en esa dirección (`http://localhost:5180`). Por eso:
 
-- Ábrela siempre en el mismo navegador y en `localhost:5173` (no en `127.0.0.1` ni en otro puerto).
+- Ábrela siempre en el mismo navegador y en `localhost:5180` (no en `127.0.0.1` ni en otro puerto).
 - Si borras los datos de navegación de ese sitio, se borra lo que hayas apuntado.
 - De vez en cuando, **descarga una copia de seguridad** desde el menú ··· (arriba a la derecha). Desde
   el mismo menú se restaura.
