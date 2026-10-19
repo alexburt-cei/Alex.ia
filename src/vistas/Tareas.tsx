@@ -366,24 +366,19 @@ function PanelTrabajo({ t }: { t: Trabajo }) {
     <div className="space-y-2">
         {t.variantes.length > 0 && (
           <Propiedad icono="estado" nombre="Tipo" apilada>
-            <div role="radiogroup" aria-label="Tipo" className="flex flex-wrap gap-1.5 px-1.5 pt-0.5">
+            <select
+              value={r.variante ?? ""}
+              onChange={(e) => editar({ variante: e.target.value || null })}
+              aria-label="Tipo"
+              className={`campo cursor-pointer border border-linea bg-caja ${r.variante ? "" : "text-tinta-2"}`}
+            >
+              <option value="">Elige el tipo…</option>
               {t.variantes.map((v) => (
-                <button
-                  key={v.id}
-                  type="button"
-                  role="radio"
-                  aria-checked={r.variante === v.id}
-                  onClick={() => editar({ variante: v.id })}
-                  className={`rounded-md border px-3 py-1 text-sm transition-colors ${
-                    r.variante === v.id
-                      ? "border-tinta bg-tinta font-medium text-fondo"
-                      : "border-linea text-tinta hover:bg-hover"
-                  }`}
-                >
+                <option key={v.id} value={v.id}>
                   {v.nombre}
-                </button>
+                </option>
               ))}
-            </div>
+            </select>
           </Propiedad>
         )}
       {t.proximoCambio && <ProximoCambio t={t} />}
