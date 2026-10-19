@@ -1,3 +1,9 @@
+# v0.5.0
+
+El menú pasa a la barra de arriba, junto al logo: centrado, sin iconos y con la página abierta
+marcada en una pastilla. Toda la app usa la tipografía Inter.
+
+
 # v0.4.1
 
 Cada nota es un documento: en Notas salen como tarjetas con su texto y, al abrir una, aparece entera
