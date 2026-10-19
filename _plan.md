@@ -1,5 +1,5 @@
 # Plan 1: Alex.ia, el centro de tareas del trabajo de Alexander
-Revisiones: 6 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
+Revisiones: 7 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
 
 ## 0. Registro de cambios
 
@@ -11,6 +11,7 @@ Revisiones: 6 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` 
 | C4 | 19/10/2026 | Enlace «JS Cupones» (editor del tema, `fc_js.js`) justo antes de la checklist, en un recuadro gris claro con texto gris oscuro; enlace a los cupones de WooCommerce en su paso; las opciones del trabajo, en una sola columna arriba a la derecha, en un cuadro blanco, reutilizable; nunca #FFF ni #000 de fondo de página (gris muy claro y muy oscuro) y sí para cuadros especiales | B2 (T2.7-T2.9) | aplicado (v0.3.0) |
 | C5 | 19/10/2026 | «Tipo», como un desplegable (select) con sus opciones en vez de botones | B2 (T2.10) | aplicado (v0.3.1) |
 | C6 | 19/10/2026 | El 5173 estaba ocupado (CEI Import): la app pasa al puerto 5180. Los datos del 5173 se llevan con una copia de seguridad (descargar en el 5173 y restaurar en el 5180) | D3 | aplicado (v0.3.2) |
+| C7 | 19/10/2026 | Sin iconos grandes en los títulos; modo claro por defecto; en Inicio, los grupos en orden Tareas, Recordatorios, Proyectos abiertos, Peticiones, Notas e Incidencias, cada uno en su cuadro (no blanco), sin la fila de cifras (pasan a pills en cada grupo); tonos crema, beige y grises en toda la app. Después: un grupo nuevo «To do», siempre el primero | B5 (T5.1-T5.5) | aplicado (v0.4.0) |
 
 ## 1. Objetivo
 
@@ -55,6 +56,9 @@ trabajo se escriben con lo que él explique, nunca inventados.
 | D25 | Aprovechar todo el ancho de la pantalla siempre que se pueda | Mensaje, 19/10 |
 | D26 | Nunca blanco ni negro puros de fondo de página; sí en cuadros especiales | Mensaje, 19/10 |
 | D27 | Las opciones de una página, en una columna arriba a la derecha en un cuadro blanco | Mensaje, 19/10 |
+| D28 | Modo claro por defecto (el oscuro, solo si se elige) | Mensaje, 19/10 |
+| D29 | Paleta crema, beige y grises cálidos; el blanco puro, para los cuadros especiales | Mensaje, 19/10 |
+| D30 | Inicio: To do (siempre el primero), Tareas, Recordatorios, Proyectos abiertos, Peticiones, Notas e Incidencias, cada grupo en su cuadro con sus cifras en pills | Mensajes, 19/10 |
 | D18 | Se trabaja siempre en la rama `main`, que Alexander actualiza en su ordenador con `git pull` | Respuesta, 16/10 |
 
 ## 3. Decisiones por defecto (pendientes del visto bueno de Alexander)
@@ -75,6 +79,7 @@ Las tomé para no parar la primera versión. Cada una se cambia sin tocar los da
 | P10 | En Inicio se puede añadir un recordatorio para hoy escribiéndolo y pulsando Intro |
 | P11 | Al marcar un paso como Problema o Bloqueado, el cursor salta a su nota |
 | P12 | «Terminar» pregunta antes; si quedan pasos sin «Hecho», lo avisa |
+| P13 | «To do» vive solo en Inicio (sin pestaña propia ni fechas); lo hecho queda tachado hasta «Limpiar hechos» |
 
 ## 4. Fuera de alcance (de momento)
 
@@ -133,6 +138,18 @@ trata y si tiene relación con CEI Import.
 ### Bloque B4 — Pasos de «SAGE» *(pendiente)*
 
 Falta saber qué es este trabajo: qué lo dispara y qué se hace.
+
+### Bloque B5 — Inicio por grupos, To do y paleta crema *(v0.4.0)*
+
+- [x] T5.1 Sin iconos grandes en los títulos de página, del panel lateral ni de los trabajos.
+- [x] T5.2 Modo claro por defecto, aunque el sistema esté en oscuro.
+- [x] T5.3 Inicio: un cuadro por grupo (`bg-fondo-2`) con sus cifras en pills, en el orden de D30;
+  fuera la fila de cifras.
+- [x] T5.4 «To do»: cosas sueltas por hacer (`Datos.todos`), que se añaden con Intro, se marcan, se
+  editan y se quitan; las hechas, tachadas al final hasta «Limpiar hechos». Solo en Inicio (D31 por
+  confirmar).
+- [x] T5.5 Paleta crema y gris cálido en claro y oscuro, con el botón principal en marrón oscuro;
+  contraste AA revisado.
 
 ## 6. Guion para explicar cada trabajo
 

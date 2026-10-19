@@ -1,3 +1,11 @@
+# v0.4.0
+
+Inicio se ordena por grupos, cada uno en su cuadro y con sus cifras en pills: To do, Tareas,
+Recordatorios, Proyectos abiertos, Peticiones, Notas e Incidencias. «To do» es nuevo: cosas sueltas
+por hacer que se añaden escribiendo y pulsando Intro. La app se abre en modo claro, con tonos crema,
+beige y grises, y los títulos ya no llevan iconos grandes.
+
+
 # v0.3.2
 
 Alex.ia se abre en **http://localhost:5180** (antes, 5173), para poder tenerla abierta a la vez que
