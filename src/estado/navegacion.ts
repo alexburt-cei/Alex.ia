@@ -6,6 +6,7 @@ import type { Enlace } from "../lib/tipos.ts";
 
 export type Pagina =
   | "inicio"
+  | "todo"
   | "tareas"
   | "proyectos"
   | "recordatorios"
@@ -15,6 +16,7 @@ export type Pagina =
 
 export const PAGINAS: { id: Pagina; nombre: string; icono: string }[] = [
   { id: "inicio", nombre: "Inicio", icono: "🏠" },
+  { id: "todo", nombre: "To do", icono: "📌" },
   { id: "tareas", nombre: "Tareas", icono: "✅" },
   { id: "proyectos", nombre: "Proyectos abiertos", icono: "📁" },
   { id: "recordatorios", nombre: "Recordatorios", icono: "⏰" },

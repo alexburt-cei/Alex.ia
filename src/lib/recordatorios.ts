@@ -96,3 +96,9 @@ export function ordenUrgentesPrimero(a: Recordatorio, b: Recordatorio): number {
   if (a.prioridad !== b.prioridad) return a.prioridad === "urgente" ? -1 : 1;
   return ordenPorFecha(a, b);
 }
+
+/** Todos los que faltan, del más antiguo al más lejano: primero los atrasados,
+ *  luego los de hoy y después los que vienen. */
+export function pendientesPorFecha(lista: Recordatorio[]): Recordatorio[] {
+  return lista.filter((r) => !r.hecho).sort(ordenPorFecha);
+}

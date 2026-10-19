@@ -16,7 +16,7 @@ import {
 } from "../src/lib/checklist.ts";
 import { aCopia, datosVacios, deCopia, estaVacio, normalizar, nuevaNota, nuevoProyecto, nuevoRecordatorio } from "../src/lib/datos.ts";
 import { diaCorto, diasEntre, plazo, proximoLunes, sumarDias } from "../src/lib/fechas.ts";
-import { completar, cuando, pendientesHoy, posponer, reprogramar, siguienteOcurrencia, vencido } from "../src/lib/recordatorios.ts";
+import { completar, cuando, pendientesHoy, pendientesPorFecha, posponer, reprogramar, siguienteOcurrencia, vencido } from "../src/lib/recordatorios.ts";
 import type { Recordatorio, Trabajo } from "../src/lib/tipos.ts";
 
 let pruebas = 0;
@@ -132,6 +132,11 @@ prueba("los de hoy: atrasados y de hoy, los urgentes primero", () => {
   assert.deepEqual(
     pendientesHoy(lista, hoy).map((r) => r.id),
     ["d", "c", "a"],
+  );
+  // En Inicio salen todos los pendientes, por fecha.
+  assert.deepEqual(
+    pendientesPorFecha(lista).map((r) => r.id),
+    ["c", "a", "d", "b"],
   );
 });
 

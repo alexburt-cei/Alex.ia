@@ -3,35 +3,27 @@
 
 import { useState, type ReactNode } from "react";
 import { estadoTrabajoVacio, recuento, rondaTocada, totalPasos } from "../lib/checklist.ts";
-import { nuevoRecordatorio, nuevoTodo } from "../lib/datos.ts";
+import { nuevoRecordatorio } from "../lib/datos.ts";
 import { diaCorto, diaDe, diaLargo, momentoLegible, sumarDias } from "../lib/fechas.ts";
 import {
   incidenciasAbiertas,
   notasRecientes,
   peticionesPendientes,
-  proximosSieteDias,
   proyectosAbiertos,
   vencidas,
 } from "../lib/inicio.ts";
 import { ESTADOS_INCIDENCIA, ESTADOS_PETICION, ESTADOS_PROYECTO, SISTEMAS, opcion } from "../lib/opciones.ts";
-import { pendientesHoy, posponer } from "../lib/recordatorios.ts";
+import { pendientesPorFecha, posponer } from "../lib/recordatorios.ts";
 import { plural } from "../lib/texto.ts";
-import {
-  actualizar,
-  cambiarTodo,
-  crear,
-  crearTodo,
-  eliminarTodo,
-  limpiarTodosHechos,
-  useDatos,
-} from "../estado/almacen.ts";
+import { actualizar, crear, useDatos } from "../estado/almacen.ts";
 import { ir, type Pagina as IdPagina } from "../estado/navegacion.ts";
 import { useAhora } from "../estado/reloj.ts";
 import { TRABAJOS } from "../trabajos/index.ts";
-import { Avance, Casilla, Etiqueta } from "../ui/basicos.tsx";
+import { Avance, Etiqueta } from "../ui/basicos.tsx";
 import { Icono } from "../ui/Icono.tsx";
 import { Pagina } from "../ui/Pagina.tsx";
 import { FechaConPlazo } from "./comun.tsx";
+import { ListaTodo, PendientesTodo } from "./Todo.tsx";
 import { CasillaRecordatorio, CuandoRecordatorio } from "./Recordatorios.tsx";
 
 const MAX_FILAS = 6;
@@ -41,9 +33,9 @@ export function Inicio() {
   const ahora = useAhora();
   const hoy = diaDe(ahora);
 
-  const recordatorios = pendientesHoy(datos.recordatorios, hoy);
+  const recordatorios = pendientesPorFecha(datos.recordatorios);
   const atrasados = recordatorios.filter((r) => r.fecha < hoy).length;
-  const proximos = proximosSieteDias(datos.recordatorios, hoy);
+  const paraHoy = recordatorios.filter((r) => r.fecha === hoy).length;
   const proyectos = proyectosAbiertos(datos.proyectos);
   const esperando = proyectos.filter((p) => p.estado === "esperando").length;
   const peticiones = peticionesPendientes(datos.peticiones);
@@ -65,7 +57,9 @@ export function Inicio() {
   return (
     <Pagina titulo="Inicio" descripcion={titulo.charAt(0).toUpperCase() + titulo.slice(1)}>
       <div className="grid gap-4 lg:grid-cols-2 2xl:grid-cols-3">
-        <GrupoTodo />
+        <Bloque icono="📌" titulo="To do" pills={<PendientesTodo />} pagina="todo">
+          <ListaTodo />
+        </Bloque>
 
         <Bloque icono="✅" titulo="Tareas"
           pills={
@@ -109,14 +103,14 @@ export function Inicio() {
           icono="⏰" titulo="Recordatorios"
           pills={
             <>
-              <Etiqueta color="default">{plural(recordatorios.length, "para hoy", "para hoy")}</Etiqueta>
+              <Etiqueta color="default">{plural(recordatorios.length, "pendiente", "pendientes")}</Etiqueta>
+              {paraHoy > 0 && <Etiqueta color="blue">{plural(paraHoy, "para hoy", "para hoy")}</Etiqueta>}
               {atrasados > 0 && <Etiqueta color="red">{plural(atrasados, "atrasado", "atrasados")}</Etiqueta>}
             </>
           }
           pagina="recordatorios"
-          pie={proximos > 0 ? `${proximos} más en los próximos 7 días` : undefined}
         >
-          {recordatorios.length === 0 && <Vacio>Nada para hoy.</Vacio>}
+          {recordatorios.length === 0 && <Vacio>No hay recordatorios pendientes.</Vacio>}
           {recordatorios.slice(0, MAX_FILAS).map((r) => (
             <div key={r.id} className="group flex min-h-[34px] items-center gap-2.5 rounded px-1.5 hover:bg-hover">
               <CasillaRecordatorio r={r} />
@@ -336,79 +330,3 @@ function AnadirRecordatorio({ hoy }: { hoy: string }) {
   );
 }
 
-/** «To do»: cosas sueltas por hacer. Se añaden escribiendo y pulsando Intro;
- *  las hechas bajan al final tachadas hasta que se limpian. */
-function GrupoTodo() {
-  const datos = useDatos();
-  const [texto, setTexto] = useState("");
-  const pendientes = datos.todos.filter((t) => !t.hecho);
-  const hechos = datos.todos.filter((t) => t.hecho);
-  const anadir = () => {
-    const t = texto.trim();
-    if (!t) return;
-    crearTodo(nuevoTodo(new Date().toISOString(), { texto: t }));
-    setTexto("");
-  };
-
-  return (
-    <section aria-label="To do" className="rounded-2xl border border-linea bg-fondo-2 p-4">
-      <header className="flex items-start justify-between gap-2 border-b border-linea pb-2">
-        <div className="flex min-w-0 flex-wrap items-center gap-2">
-          <h2 className="flex items-center gap-2 text-lg font-semibold">
-            <span aria-hidden="true">📌</span>
-            To do
-          </h2>
-          <Etiqueta color="default">{plural(pendientes.length, "pendiente", "pendientes")}</Etiqueta>
-        </div>
-        {hechos.length > 0 && (
-          <button
-            type="button"
-            onClick={limpiarTodosHechos}
-            className="shrink-0 rounded px-1.5 py-0.5 text-sm text-tinta-2 hover:bg-hover hover:text-tinta"
-          >
-            Limpiar hechos ({hechos.length})
-          </button>
-        )}
-      </header>
-      <div className="pt-1.5">
-        {[...pendientes, ...hechos].map((t) => (
-          <div key={t.id} className="group flex min-h-[34px] items-center gap-2.5 rounded px-1.5 hover:bg-hover">
-            <Casilla
-              marcada={t.hecho}
-              onCambiar={(hecho) => cambiarTodo(t.id, { hecho, hechoEl: hecho ? new Date().toISOString() : null })}
-              etiqueta={`Hecho: ${t.texto}`}
-            />
-            <input
-              value={t.texto}
-              onChange={(e) => cambiarTodo(t.id, { texto: e.target.value })}
-              aria-label="To do"
-              className={`min-w-0 flex-1 bg-transparent py-1 outline-none ${t.hecho ? "text-tinta-2 line-through" : ""}`}
-            />
-            <button
-              type="button"
-              onClick={() => eliminarTodo(t.id)}
-              aria-label={`Quitar «${t.texto}»`}
-              title="Quitar"
-              className="rounded p-0.5 text-tinta-2 opacity-0 hover:bg-hover hover:text-tinta focus:opacity-100 group-hover:opacity-100"
-            >
-              <Icono nombre="papelera" className="h-3.5 w-3.5" />
-            </button>
-          </div>
-        ))}
-        <div className="flex min-h-[34px] items-center gap-2.5 px-1.5">
-          <Icono nombre="mas" className="h-4 w-4 text-tinta-3" />
-          <input
-            value={texto}
-            onChange={(e) => setTexto(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") anadir();
-            }}
-            placeholder="Añadir y pulsar Intro"
-            aria-label="Nuevo to do"
-            className="min-w-0 flex-1 bg-transparent py-1 text-[15px] outline-none placeholder:text-tinta-3"
-          />
-        </div>
-      </div>
-    </section>
-  );
-}

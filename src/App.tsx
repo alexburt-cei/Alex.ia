@@ -16,6 +16,7 @@ import { Peticiones } from "./vistas/Peticiones.tsx";
 import { Proyectos } from "./vistas/Proyectos.tsx";
 import { Recordatorios } from "./vistas/Recordatorios.tsx";
 import { Tareas } from "./vistas/Tareas.tsx";
+import { Todo } from "./vistas/Todo.tsx";
 
 export default function App() {
   const ruta = useRuta();
@@ -48,6 +49,8 @@ function Contenido({ ruta }: { ruta: Ruta }) {
   switch (ruta.pagina) {
     case "inicio":
       return <Inicio />;
+    case "todo":
+      return <Todo />;
     case "tareas":
       return <Tareas trabajo={ruta.sub} />;
     case "proyectos":
