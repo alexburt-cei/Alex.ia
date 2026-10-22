@@ -127,7 +127,7 @@ function VistaTrabajo({ t }: { t: Trabajo }) {
               orden, dónde se hace cada uno y cómo sabes que ha salido bien) y los escribo aquí.
             </Aviso>
           ) : secciones.length === 0 ? (
-            <Aviso icono="👆">Elige el tipo para ver sus pasos.</Aviso>
+            <Aviso icono="👆">Elige {(t.etiquetaVariante ?? "el tipo").toLowerCase()} para ver sus pasos.</Aviso>
           ) : conCards ? (
             <TarjetasPasos
               pasos={secciones.flatMap((s) => s.pasos)}
@@ -361,17 +361,18 @@ function PanelTrabajo({ t }: { t: Trabajo }) {
   return (
     <div className="space-y-2">
         {t.variantes.length > 0 && (
-          <Propiedad icono="estado" nombre="Tipo" apilada>
+          <Propiedad icono="estado" nombre={t.etiquetaVariante ?? "Tipo"} apilada>
             <select
               value={r.variante ?? ""}
               onChange={(e) => editar({ variante: e.target.value || null })}
-              aria-label="Tipo"
+              aria-label={t.etiquetaVariante ?? "Tipo"}
               className={`campo cursor-pointer border border-linea bg-caja ${r.variante ? "" : "text-tinta-2"}`}
             >
-              <option value="">Elige el tipo…</option>
+              <option value="">{t.etiquetaVariante ? `Elige ${t.etiquetaVariante.toLowerCase()}…` : "Elige el tipo…"}</option>
               {t.variantes.map((v) => (
-                <option key={v.id} value={v.id}>
+                <option key={v.id} value={v.id} disabled={v.deshabilitada}>
                   {v.nombre}
+                  {v.deshabilitada ? " (próximamente)" : ""}
                 </option>
               ))}
             </select>

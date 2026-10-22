@@ -34,6 +34,8 @@ export interface Seccion {
 export interface Variante {
   id: string;
   nombre: string;
+  /** Sale en el selector, pero aún no se puede elegir. */
+  deshabilitada?: boolean;
 }
 
 export interface Trabajo {
@@ -48,6 +50,8 @@ export interface Trabajo {
   enlaces?: { texto: string; url: string }[];
   /** Si tiene el campo para crear el recordatorio del próximo cambio. */
   proximoCambio?: { etiqueta: string; texto: string };
+  /** Nombre del selector de variantes («Tipo» si no se dice otro). */
+  etiquetaVariante?: string;
   variantes: Variante[];
   secciones: Seccion[];
 }
