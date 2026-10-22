@@ -1,5 +1,5 @@
 # Plan 1: Alex.ia, el centro de tareas del trabajo de Alexander
-Revisiones: 12 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
+Revisiones: 13 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
 
 ## 0. Registro de cambios
 
@@ -17,6 +17,7 @@ Revisiones: 12 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main`
 | C10 | 19/10/2026 | Más redondeo en las cards en general | B5 (T5.10) | aplicado (v0.5.1) |
 | C11 | 19/10/2026 | En Inicio, Recordatorios con todos los creados y su fecha, no solo los de hoy; «To do» también en el menú de arriba | B5 (T5.11-T5.12) | aplicado (v0.5.2) |
 | C12 | 22/10/2026 | Importar al CRM, con un selector de contenido: Alumnxs, Profesores y Empleo (este, de momento, desactivado) | B3 (T3.1) | aplicado (v0.5.3) |
+| C13 | 22/10/2026 | Que lo escrito se guarde y se vea desde cualquier dispositivo (dos portátiles). Respuesta: app en Vercel con los datos en la nube, pero queda aparcado porque Alexander no tiene cuenta de Vercel | B6 | aparcado |
 
 ## 1. Objetivo
 
@@ -173,6 +174,15 @@ Falta saber qué es este trabajo: qué lo dispara y qué se hace.
   de pendientes, para hoy y atrasados.
 - [x] T5.12 Pestaña «To do» (después de Inicio), con la misma lista que el grupo de Inicio
   (`src/vistas/Todo.tsx`).
+
+### Bloque B6 — Datos en la nube *(aparcado: falta una cuenta de Vercel)*
+
+Elegido (C13): publicar Alex.ia en Vercel con contraseña, como CEI Import, y guardar los datos en una
+base de datos de Vercel (Upstash Redis), con aviso si dos dispositivos cambian lo mismo a la vez y una
+copia en el navegador para cortes de conexión. Los datos actuales se pasan con la copia de seguridad.
+Cuando Alexander tenga la cuenta: crear el proyecto desde GitHub, poner la contraseña y añadir la
+base de datos desde Storage; el código lo hace Claude. Mientras, entre portátiles: descargar la copia
+de seguridad en uno y restaurarla en el otro.
 
 ## 6. Guion para explicar cada trabajo
 
