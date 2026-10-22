@@ -1,3 +1,9 @@
+# v0.5.3
+
+Importar al CRM tiene un selector «Contenido»: Alumnxs, Profesores y Empleo (este último, de
+momento, desactivado). Sus pasos llegarán cuando se expliquen.
+
+
 # v0.5.2
 
 En Inicio, Recordatorios enseña todos los pendientes con su fecha (no solo los de hoy), primero los

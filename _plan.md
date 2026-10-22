@@ -1,5 +1,5 @@
 # Plan 1: Alex.ia, el centro de tareas del trabajo de Alexander
-Revisiones: 11 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
+Revisiones: 12 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main` (creada el 16/10/2026 desde `claude/stoic-babbage-66fmko`) · Creado: 15/10/2026
 
 ## 0. Registro de cambios
 
@@ -16,6 +16,7 @@ Revisiones: 11 · Repositorio: `alexburt-cei/Alex.ia` · Rama de trabajo: `main`
 | C9 | 19/10/2026 | Las pestañas de arriba, sin iconos, en la barra superior junto al logo, centradas y con estilo de menú web; la tipografía Inter en toda la app | B5 (T5.8-T5.9) | aplicado (v0.5.0) |
 | C10 | 19/10/2026 | Más redondeo en las cards en general | B5 (T5.10) | aplicado (v0.5.1) |
 | C11 | 19/10/2026 | En Inicio, Recordatorios con todos los creados y su fecha, no solo los de hoy; «To do» también en el menú de arriba | B5 (T5.11-T5.12) | aplicado (v0.5.2) |
+| C12 | 22/10/2026 | Importar al CRM, con un selector de contenido: Alumnxs, Profesores y Empleo (este, de momento, desactivado) | B3 (T3.1) | aplicado (v0.5.3) |
 
 ## 1. Objetivo
 
@@ -137,6 +138,9 @@ Las tomé para no parar la primera versión. Cada una se cambia sin tocar los da
 - [x] T2.10 «Tipo», un `<select>` con «Elige el tipo…» y una opción por variante (C5).
 
 ### Bloque B3 — Pasos de «Importar al CRM» *(pendiente; ya sale con cards, D19)*
+
+- [x] T3.1 Selector «Contenido» (`Trabajo.etiquetaVariante`): Alumnxs, Profesores y Empleo, este
+  desactivado («próximamente», `Variante.deshabilitada`). Faltan los pasos de cada uno.
 
 Importar archivos al CRM y editar los registros creados. Falta saber de qué ficheros y registros se
 trata y si tiene relación con CEI Import.
